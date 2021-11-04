@@ -8,4 +8,5 @@ import com.StreamCatch.app.Entity.Platform;
 @Repository
 public interface PlatformRepository extends JpaRepository<Platform, String>{
 
+
 }
