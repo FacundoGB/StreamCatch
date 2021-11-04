@@ -1,11 +1,10 @@
 package com.StreamCatch.app.Entity;
 
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,16 +17,8 @@ public class Platform {
     private String id;
     private String name;
     private double price;
-    @ManyToMany(mappedBy = "platforms")
-    private Set<User> user;
-    
-    
-	public Set<User> getUsers() {
-		return user;
-	}
-	public void setUsers(Set<User> users) {
-		this.user = users;
-	}
+
+   
 	public String getId() {
 		return id;
 	}

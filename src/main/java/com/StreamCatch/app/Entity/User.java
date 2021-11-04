@@ -1,13 +1,10 @@
 package com.StreamCatch.app.Entity;
 
-import java.util.Set;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -23,17 +20,10 @@ public class User {
 	private String surname;
 	private String email;
 	private String password;
-	@ManyToMany
-	@JoinTable(
-			name= "po",
-			joinColumns = @JoinColumn(name= "user_id"),
-			inverseJoinColumns = @JoinColumn (name = "platform_id")
-			)
-	private Set<Platform> platforms;
 	@ManyToOne
-	private Movie movies;
+	private Platform platforms;
 	@ManyToOne
-	private Serie series;
+	private Content content;
 
 	
 	public String getId() {
@@ -65,6 +55,18 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public Platform getPlatforms() {
+		return platforms;
+	}
+	public void setPlatforms(Platform platforms) {
+		this.platforms = platforms;
+	}
+	public Content getContent() {
+		return content;
+	}
+	public void setContent(Content content) {
+		this.content = content;
 	}
 
 
