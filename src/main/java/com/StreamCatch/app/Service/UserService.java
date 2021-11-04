@@ -64,7 +64,7 @@ public class UserService {
 			try {
 				repo.deleteById(id);			
 			} catch (Exception e) {
-				throw new ErrorException("Error al eliminar el usuario");
+				throw new ErrorException("Error al eliminar el usr");
 			}
 			
 		}
