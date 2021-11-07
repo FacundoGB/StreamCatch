@@ -1,0 +1,28 @@
+@font-face {
+    font-family:Gotham-Bold;
+    src: url(/Fuentes/Gotham-Font/Gotham-Bold.ttf);
+}
+h1{
+    color:white;
+    text-align:right;
+    font-weight:bold;
+    font-family:Gotham-Bold;
+    
+}
+h4{
+    margin-top:50px;
+    margin-left:80px;
+    color:white;
+    text-align:right;
+    font-weight:bold;
+    font-family:Gotham-Bold;
+    
+}
+.second{
+    margin-top:50px;
+    color:white;
+    text-align:right;
+    font-weight:bold;
+    font-family:Gotham-Bold;
+    
+}
