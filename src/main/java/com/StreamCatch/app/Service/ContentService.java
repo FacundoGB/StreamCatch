@@ -1,7 +1,19 @@
 package com.StreamCatch.app.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.StreamCatch.app.Entity.Content;
+import com.StreamCatch.app.Exceptions.ErrorException;
+import com.StreamCatch.app.Exceptions.ValidationError;
 import com.StreamCatch.app.Repository.ContentRepository;
 
 public class ContentService {
@@ -15,7 +27,7 @@ public class ContentService {
 	
 	// CREACIÓN CONTENIDO //
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void createContent(String name, MultipartFile file) throws ErrorException {
+	public void createContent(MultipartFile file, String name) throws ErrorException {
 		
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -35,7 +47,7 @@ public class ContentService {
 
 	// MODIFICAR CONTENIDO //
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void updateContent(String name, MultipartFile file) throws ErrorException{
+	public void updateContent(MultipartFile file, String name, String id) throws ErrorException{
 		
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
