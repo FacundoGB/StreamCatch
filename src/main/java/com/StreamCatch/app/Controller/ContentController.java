@@ -18,6 +18,7 @@ public class ContentController {
 
 	@Autowired
 	private ContentService contentService;
+	
 	private final String viewPath = "content/";
 
 	@GetMapping()
@@ -36,8 +37,7 @@ public class ContentController {
 	}
 
 	@PostMapping("/create")
-	public String runCreate(ModelMap model, @RequestParam("name") String name, 
-	@RequestParam("file") MultipartFile file) {
+	public String runCreate(ModelMap model, @RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
 
 		try {
 
