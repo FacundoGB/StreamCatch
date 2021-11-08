@@ -13,9 +13,9 @@ public class ContentService {
 	 * CRUD ---------
 	 */
 	
-	// Creacion contenido (ver el seteo de plataformas) //
+	// CREACIÓN CONTENIDO //
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void createContent(String name, String fileName) throws ErrorException {
+	public void createContent(String name, MultipartFile file) throws ErrorException {
 		
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -33,11 +33,13 @@ public class ContentService {
 
 	}
 
-	//MODIFICAR//
+	// MODIFICAR CONTENIDO //
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void modifyCont(String name) throws ErrorException{
+	public void updateContent(String name, MultipartFile file) throws ErrorException{
 		
-		validate(name);
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+		validate(fileName, name);
 		
 		Optional<Content> answer = repo.findById(id);
 		
@@ -54,15 +56,15 @@ public class ContentService {
 			repo.save(content);
 			
 		} else {
-			throw new ErrorException("No se encontró la plataforma solicitada");
+			throw new ErrorException("No se encontró el contenido solicitado");
 		}
 		
 		
 	}
 
-	//ELIMINAR//
+	// BORRAR CONTENIDO //
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void removeById(String id) throws ErrorException {
+	public void deleteContent(String id) throws ErrorException {
 			
 			try {
 				repo.deleteById(id);			
@@ -71,8 +73,14 @@ public class ContentService {
 			}
 			
 	}
+
+
+	@Transactional(readOnly = true)
+	public List<Content> findAll(){
+		return repo.findAll();	
+	}
 	
-	// Validaciones //
+	// VALIDACIÓN DE CONTENIDO //
 	public void validate(String fileName, String name) {
 		
 		if(fileName.contains("..")) {
