@@ -11,8 +11,6 @@ import com.StreamCatch.app.Service.ContentService;
 @RequestMapping("/content")
 public class ContentController {
 
-		@Autowired
-		private ContentService serieService;
 		private final String viewPath = "content/";
 
 
