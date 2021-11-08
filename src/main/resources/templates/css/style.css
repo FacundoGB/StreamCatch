@@ -1,0 +1,179 @@
+body{
+    height: 100vh; 
+    
+    background:  linear-gradient(180deg, #504E4E,#2C2929,#2D2B2B );
+    background-repeat:inherit;
+    position: relative;
+    font-family: 'Gotham';
+}
+
+header{
+    margin: top 0;
+    position: relative;
+    height: 75px;
+    background: #C4C4C4;
+}
+nav .logo{
+    width: 254px;
+    padding: 15px;
+    display: inline;
+    margin-top:0px;
+}
+nav ul{
+	float: right;
+	margin-right: 20px;
+	padding: 20px;
+    }
+nav ul li{
+	display: inline-block;
+
+    }
+nav ul li a{
+    padding: 10px;
+    text-transform: uppercase;
+    color: white;
+    text-decoration: none;
+}
+.splash{
+    width: 100%;
+    height: 100vh;
+    background-image: url(../images/indeximage);
+    background-size:cover;
+    margin-bottom: 100px;
+
+
+}
+.section2{
+    padding: 50px;
+    padding-top: 50px;
+}
+.section2 h1{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color:#C4C4C4;
+}
+.centrado{
+    text-align: center;
+}
+.centrado .barra{
+    float:right;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 24px;
+    align-items: center;
+    position: absolute;
+    left: 56%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    padding: 5px;
+    border-radius: 29px;
+    width: 55%;
+    margin-top: 550px;
+    padding-top: 10px;
+}
+.icon{
+    display: flex;
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    background: #f0e006;
+    width: 45px;
+    height: 45px;
+    line-height: 3;
+    text-align:center;
+    color: white;
+    font-size: 15px;
+    border-radius: 50%;
+    margin-top: 489px;
+}
+.espacios{
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+}
+
+.footer footer{
+    background: #F5C800;
+    transform: translate();   
+    margin-top: 0px;
+    width:100%;
+    height:60px;
+    position: bottom;
+    bottom: 0;
+    position: 0;
+
+
+
+}
+
+.pie-pagina{
+    width: 100%;
+    background-color: yellow;
+    position: fixed;
+    bottom: 0;
+    margin-top: 30px;
+}
+.pie-pagina .grupo1{
+width: 100%;
+max-width: 1200px;
+margin: auto;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-gap: 50px;
+padding: 45px 0px;
+}
+.pie-pagina .grupo1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.pie-pagina .grupo1 .box figure img{
+    width: 250px;
+}
+.pie-pagina .grupo1 .box h2{
+    color: black;
+    margin-bottom: 25px;
+    font-size: 20px;
+}
+.pie-pagina .grupo1 .box p{
+    color: gray;
+    margin-bottom: 10px;
+
+}
+.pie-pagina .grupo1 .red-social a{
+    display: inline-block;
+    text-decoration: none;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    margin-right: 10px;
+    background-color: rgb(148, 148, 13);
+    text-align: center;
+    transition: all 300ms ease;
+}
+.pie-pagina .grupo1 .red-social a:hover{
+    color: yellowgreen;
+}
+.pie-pagina .grupo2{
+    background-color: rgb(145, 160, 11);
+    padding: 15px 10px;
+    text-align: center;
+    color: black;
+
+}
+.pie-pagina .grupo2 small{
+    font-size: 15px;
+}
+@media screen and (max-width:700px){
+.pie-pagina .grupo1{
+    width: 90%;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 30px;
+    padding: 35px 0px;
+
+}
+}
