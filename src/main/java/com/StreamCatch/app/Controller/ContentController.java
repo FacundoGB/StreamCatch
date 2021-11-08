@@ -31,11 +31,12 @@ public class ContentController {
 	}
 
 	@PostMapping("/create")
-	public String runCreate(ModelMap model, @RequestParam("name") String name) {
+	public String runCreate(ModelMap model, @RequestParam("name") String name, @RequestParam("file") MultipartFile file
+	) {
 
 		try {
 
-			contentService.createContent(name);
+			contentService.createContent(file, name);
 			
 
 		} catch (Exception e) {
