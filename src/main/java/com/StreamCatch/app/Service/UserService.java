@@ -60,23 +60,20 @@ public class UserService implements UserDetailsService{
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
 	public void modifyUsr(String id, String name, String surname, String email, String password) throws ErrorException{
 		
-		validate(name, surname, email, password);
-		
-		Optional<Users> answer = repo.findById(id);
-		if(answer.isPresent()) {
-			Users user = new Users();
-
-			user.setName(name);
-			user.setSurname(surname);
-			user.setEmail(email);
+		try {
+			Users users = repo.getById(id);
+			users.setName(name);
+			users.setSurname(surname);
+			users.setEmail(email);
 	        String encrypted = new BCryptPasswordEncoder().encode(password);
-	        user.setPassword(encrypted);
+	        users.setPassword(encrypted);
 			
-			repo.save(user);
+			repo.save(users);
 			
-		} else {
-			throw new ErrorException("No se encontró el usuario solicitado");
+		} catch (Exception e) {
+			throw new ErrorException("Huno un problema en la actualizacion del Usuario");
 		}
+		
 	
 	}
 	
@@ -92,8 +89,34 @@ public class UserService implements UserDetailsService{
 			
 		}
 	
-	@Transactional(readOnly=true)
 	
+	/*
+	 * BUSQUEDAS --------
+	 * 
+	 */
+	
+	public Users returnUser(String id) {
+		Users u = repo.getById(id);
+		return u;
+		
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Users> listUsers(){
+		return repo.findAll();
+	}
+	
+	@Transactional(readOnly=true)
+	public Users findById(String id) throws ErrorException{
+		Optional<Users> answer = repo.findById(id);
+		
+		if(!answer.isEmpty()) {
+			return answer.get();
+			
+		}else {
+			throw new ErrorException("No existe usuario con dicho id");
+		}
+	}
 	
 	/*
 	 * VALIDATION ---------
