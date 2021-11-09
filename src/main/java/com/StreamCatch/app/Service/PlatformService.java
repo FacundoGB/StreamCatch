@@ -59,6 +59,7 @@ public class PlatformService {
 		validate(fileName, name, price);
 		
 		Optional<Platform> answer = repo.findById(id);
+		
 		if(answer.isPresent()) {
 			
 			Platform platform = new Platform();
@@ -89,8 +90,28 @@ public class PlatformService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Platform> findAll(){
+	public List<Platform> listPlatforms(){
 		return repo.findAll();	
+	}
+	
+	@Transactional(readOnly=true)
+	public Platform returnPlatform(String id) {
+		Platform p = repo.getById(id);
+		return p;
+		
+	}
+	
+	
+	@Transactional(readOnly=true)
+	public Platform findById(String id) throws ErrorException{
+		Optional<Platform> answer = repo.findById(id);
+		
+		if(!answer.isEmpty()) {
+			return answer.get();
+			
+		}else {
+			throw new ErrorException("No existe Plataforma con dicho id");
+		}
 	}
 	
 	/*

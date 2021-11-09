@@ -1,5 +1,7 @@
 package com.StreamCatch.app.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.StreamCatch.app.Entity.Platform;
+import com.StreamCatch.app.Entity.Users;
 import com.StreamCatch.app.Service.PlatformService;
 
 @Controller
@@ -23,6 +27,17 @@ public class PlatformController {
 	public String create() {
 
 		return this.viewPath.concat("crear-plataforma");
+
+	}
+	
+	// LISTAR PLATAFORMAS //
+	@GetMapping("/list")
+	public String index(ModelMap userModel) {
+
+		List<Platform> myPlatforms = platService.listPlatforms();
+		userModel.addAttribute("platforms", myPlatforms);
+
+		return "platforms";
 
 	}
 	
