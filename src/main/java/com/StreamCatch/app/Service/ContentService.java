@@ -16,7 +16,7 @@ import com.StreamCatch.app.Exceptions.ErrorException;
 import com.StreamCatch.app.Exceptions.ValidationError;
 import com.StreamCatch.app.Repository.ContentRepository;
 
-public class ContentService {
+public class ContentService{
 	
 	@Autowired
 	private ContentRepository repo;
@@ -26,6 +26,7 @@ public class ContentService {
 	 */
 	
 	// CREACIÓN CONTENIDO //
+	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
 	public void createContent(MultipartFile file, String name) throws ErrorException {
 		
@@ -46,6 +47,7 @@ public class ContentService {
 	}
 
 	// MODIFICAR CONTENIDO //
+	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
 	public void updateContent(MultipartFile file, String name, String id) throws ErrorException{
 		
@@ -75,8 +77,9 @@ public class ContentService {
 	}
 
 	// BORRAR CONTENIDO //
+	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void deleteContent(String id) throws ErrorException {
+	public void removeById(String id) throws ErrorException {
 			
 			try {
 				repo.deleteById(id);			
@@ -86,13 +89,30 @@ public class ContentService {
 			
 	}
 
-
+	
+	// BÚSQUEDAS //
+	
 	@Transactional(readOnly = true)
-	public List<Content> findAll(){
+	public List<Content> listContent(){
 		return repo.findAll();	
 	}
 	
+	
+	@Transactional(readOnly=true)
+	public Content findById(String id) throws ErrorException{
+		Optional<Content> answer = repo.findById(id);
+		
+		if(!answer.isEmpty()) {
+			return answer.get();
+			
+		}else {
+			throw new ErrorException("No existe contenido con dicho id");
+		}
+	}
+	
+	
 	// VALIDACIÓN DE CONTENIDO //
+	
 	public void validate(String fileName, String name) {
 		
 		if(fileName.contains("..")) {
