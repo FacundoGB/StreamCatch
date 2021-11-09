@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODIFICACION</title>
+</head>
+<body>
+<section>
+        <form class="row g-3" th:action="@{/usuario/update/__${users.id}__}" method="POST"> 
+            <div class="col-md-4"> 
+              <label for="validationName" class="form-label">Name</label>
+              <input type="text" class="form-control" name="name" th:value="${users.name}">
+              <label for="validationSurname" class="form-label">Surname</label>
+              <input type="text" class="form-control" name="surname" th:value="${users.surname}">
+              <label for="validationEmail" class="form-label">Email</label>
+              <input type="text" class="form-control" name="email" th:value="${users.email}">
+              <label for="validationPassword" class="form-label">Password</label>
+              <input type="text" class="form-control" name="password">                            
+            </div>
+
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit">SAVE</button>
+            </div>
+          </form>
+      </section>
+
+</body>
+</html>
