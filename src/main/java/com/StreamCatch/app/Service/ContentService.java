@@ -56,26 +56,24 @@ public class ContentService{
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
 		validate(fileName, name);
-		
-		Optional<Content> answer = repo.findById(id);
-		
-		if(answer.isPresent()) {
+				
+		try {
 			
-			Content content = new Content();
+		Content content = repo.getById(id);
+		
 			try {
 				content.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			content.setName(name);
-						
+		
+			content.setName(name);	
 			repo.save(content);
 			
-		} else {
-			throw new ErrorException("No se encontró el contenido solicitado");
+		} catch (Exception e) {
+			throw new ErrorException("Hubo un error de actualización de contenido");
 		}
-		
-		
+				
 	}
 
 	// BORRAR CONTENIDO //
