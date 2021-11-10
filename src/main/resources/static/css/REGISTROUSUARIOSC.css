@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #2D2B2B;
+}
+
+header {
+    background: #C4C4C4;
+    width: 100%;
+    clear: both;
+    content: '';
+    display: flex;
+}
+
+nav {
+    float: right;
+}
+
+nav ul li {
+    list-style: none;
+    margin-left: 1450px;
+    padding: 12px 0;
+    float: left;
+    position: relative;
+    left: 210px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.contenedor {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+    max-width: 1000px;
+    overflow: hidden;
+    
+}
+
+.form-register {
+    width: 20xp;
+    padding: 40xp;
+    border-radius: 4px;
+    color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h4 {
+    font-size: 42px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.controls {
+    padding: 10px;
+    border-radius: 25px;
+    border: 20px;
+    margin-bottom: 12px;
+    border: 1px solid #fff;
+    font-size: 22px;
+    text-align: center;
+}
+
+.form2 p {
+    height: 20px;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+}
+
+.checkbox {
+    padding: 5px;
+    margin: 10px;
+    border: 2px;
+}
+
+.button {
+    width: 15%;
+    background: #F5C800;
+    border-radius: 22px;
+    padding: 1px;
+    color: rgb(0, 0, 0);
+    font-size: 14px;
+}
+
+.pie-pagina{
+    background-color: #efbb1e;
+    padding: 1em 0;
+    margin-top: auto;
+    height: 50px;    
+}
+
+.pie-pagina .centrado{
+    text-align: center;
+    color: #000;
+}
