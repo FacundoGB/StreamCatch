@@ -13,7 +13,7 @@
 
 <body>
     <section>
-        <form class="row g-3" action="/platform/create" method="POST" enctype="multipart/form-data">
+        <form class="row g-3" th:action="@{/platform/update/__${platform.id}__}" method="POST" enctype="multipart/form-data">
             
             <div class="col-md-4">
                 <label for="validationName" class="form-label">Name</label>

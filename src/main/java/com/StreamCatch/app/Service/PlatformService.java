@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.StreamCatch.app.Entity.Platform;
-import com.StreamCatch.app.Entity.Users;
+
 import com.StreamCatch.app.Exceptions.ErrorException;
 import com.StreamCatch.app.Exceptions.ValidationError;
 import com.StreamCatch.app.Repository.PlatformRepository;
@@ -31,14 +31,18 @@ public class PlatformService {
 	
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void createPlatform(MultipartFile file, String name, String price) throws ErrorException {
+	public void createPlatform(MultipartFile file, String name, String price)  {
+		
+		Platform platform = new Platform();
 		
 		Double priceDouble = Double.parseDouble(price);
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		
-		validate(fileName, name, price);
+		//validate(fileName, name, price);
 		
-		Platform platform = new Platform();
+		if(fileName.contains("..")) {
+			throw new ValidationError("Tipo de archivo invalido");
+		}
 		try {
 			platform.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
 		} catch (IOException e) {
@@ -51,32 +55,38 @@ public class PlatformService {
 	};
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void updatePlatform(MultipartFile file, String name, String price, String id) throws ErrorException{
+	public void updatePlatform(String id, MultipartFile file, String name, String price) throws ErrorException{
 		
 		Double priceDouble = Double.parseDouble(price);
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 		
-		validate(fileName, name, price);
+		//validate(fileName, name, price);
 		
-		Optional<Platform> answer = repo.findById(id);
-		
-		if(answer.isPresent()) {
+		if(fileName.contains("..")) {
+			throw new ValidationError("Tipo de archivo invalido");
+		}
+
+		try {	
 			
-			Platform platform = new Platform();
+			Platform platform = repo.getById(id);
+			
 			try {
 				platform.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
 			platform.setName(name);
 			platform.setPrice(priceDouble);
-			
+
 			repo.save(platform);
 			
-		} else {
-			throw new ErrorException("No se encontró la plataforma solicitada");
+		} catch (Exception e) {
+			throw new ErrorException("Huno un problema en la actualizacion de la Plataforma");
 		}
-		
+	
+
+
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
