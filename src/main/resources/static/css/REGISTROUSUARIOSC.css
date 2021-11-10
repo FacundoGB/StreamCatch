@@ -47,7 +47,7 @@ nav ul li a {
 }
 
 .form-register {
-    width: 10xp;
+    width: 20xp;
     padding: 40xp;
     border-radius: 4px;
     color: #fff;
@@ -57,22 +57,21 @@ nav ul li a {
 
 h4 {
     font-size: 42px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     text-align: center;
 }
 .controls {
-    padding: 5px;
-    
-    border-radius: 22px;
+    padding: 10px;
+    border-radius: 25px;
     border: 20px;
-    margin-bottom: 5px;
+    margin-bottom: 12px;
     border: 1px solid #fff;
-    font-size: 14px;
+    font-size: 22px;
     text-align: center;
 }
 
 .form2 p {
-    height: 15px;
+    height: 20px;
     text-align: center;
     font-size: 10px;
     color: #fff;
