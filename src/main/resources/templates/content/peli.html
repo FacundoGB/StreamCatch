@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="/style.css">
+    <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"></html>
+<body>
+ <!-- Head -->
+<head th:replace="/fragments/pelihead :: head"></head>
+<body>
+ <!-- Header -->
+<header th:replace="/fragments/header :: header"></header>
+
+    <div class="d-flex justify-content-center"><section class="peli">
+       <table>
+           <thead>
+           <tr>
+             <td class="first">
+                <p><img th:src="#" class="img-fluid" alt="logo_peli"></p>
+             </td>  
+             <td class="second">
+                <br><h1 class="titulo">Avengers</h1>
+                <h5 class="titulo2">Solo disponible en</h5>
+                <p><img th:src="#" class="img" alt="logo_plat"></p>
+             </td> 
+           </tr>
+           </thead>
+           <tbody th:each=""></tbody>
+       </table>
+    </section>
+</div>
+</body>
+<!-- Footer -->
+<footer th:replace="/fragments/footer :: footer"></footer>
+</html>
