@@ -51,7 +51,7 @@ public class ContentController implements ErrorHandler {
 	@GetMapping("/create")
 	public String addContent() {
 
-		return "registerContent";
+		return "createContent";
 
 	}
 	
@@ -66,7 +66,7 @@ public class ContentController implements ErrorHandler {
 
 		} catch (Exception e) {
 			model.put("error", e.getMessage());
-			return "registerContent";
+			return "createContent";
 		}
 		
 	}
@@ -83,7 +83,7 @@ public class ContentController implements ErrorHandler {
 			return this.errorHandler(e, model);
 		}
 			
-		return "modContent.html";
+		return "modContent";
 	}
 	
 	
