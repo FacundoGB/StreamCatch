@@ -1,0 +1,22 @@
+@font-face {
+    font-family: Gotham-Light;
+    src: url(/ProyectoFinal/Fuentes/Gotham-Light.otf);
+}
+
+@font-face {
+    font-family: Gotham-Black;
+    src: url(/ProyectoFinal/Fuentes/Gotham-Black.otf);
+}
+@font-face {
+    font-family: JUNAR;
+    src: url(/ProyectoFinal/Fuentes/JUNAR.ttf);
+}
+
+.titulo-servicios h2{
+    font-family: JUNAR;
+}
+
+.section1 .section1{
+    font-family: Gotham-Black;
+    font-size: 15px;
+}
