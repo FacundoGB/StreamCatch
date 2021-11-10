@@ -1,10 +1,11 @@
 package com.StreamCatch.app.Entity;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.Lob;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -17,8 +18,17 @@ public class Platform {
     private String id;
     private String name;
     private double price;
+	@Lob
+	@Column(columnDefinition="MEDIUMBLOB")
+	private String image;
 
-   
+	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	public String getId() {
 		return id;
 	}

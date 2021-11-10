@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+</head>
+
+<body>
+    <section>
+        <form class="row g-3" action="/platform/create" method="POST" enctype="multipart/form-data">
+            
+            <div class="col-md-4">
+                <label for="validationName" class="form-label">Name</label>
+                <input type="text" class="form-control" name="name">
+                
+                <label for="validationSurname" class="form-label">price</label>
+                <input type="number" class="form-control" name="price">
+                
+                <label>Add an image</label>
+                <div class="custom-file-mb-2">
+                    <input type="file" name="file" class="custom-file-input" id="customFile" accept="image/png, image/jpeg, image/jpg">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit">SAVE</button>
+            </div>
+        </form>
+    </section>
+
+</body>
+
+</html>

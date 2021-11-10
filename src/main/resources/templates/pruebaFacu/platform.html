@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADMIN</title>
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Image</th>
+      </tr>
+    </thead>
+
+    <tbody th:each="Platform : ${platforms}">
+      <tr>
+
+
+        <td th:text="${Platform.name}"></td>
+        <td th:text="${Platform.price}"></td>
+        <td style="width: 50px; height: 50px"><img alt="" th:src="*{'data:image/jpeg;base64,'+{Platform.image}}" style="width: 100px; height: 100px"></td>
+        <td><a class="btn btn-danger" th:href="@{/platform/remove/{id}(id=${Platform.id})}">Eliminar</a></td>
+        <td><a class="btn btn-primary" th:href="@{/platform/update/{id}(id=${Platform.id})}">Actualizar</a></td>
+
+      </tr>
+      <!-- class="btn btn-warning text-white" -->
+      <!-- class="btn btn-warning text-white" -->
+    </tbody>
+  </table>
+
+  <a class="btn btn-success" th:href="@{/platform/create}">Create new Platform</a>
+</body>
+
+</html>

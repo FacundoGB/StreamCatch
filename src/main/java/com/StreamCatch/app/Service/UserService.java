@@ -1,60 +1,80 @@
 package com.StreamCatch.app.Service;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-
-import com.StreamCatch.app.Entity.User;
+import com.StreamCatch.app.Entity.Users;
 import com.StreamCatch.app.Exceptions.ErrorException;
 import com.StreamCatch.app.Exceptions.ValidationError;
 import com.StreamCatch.app.Repository.UserRepository;
 
+
+
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
 	
 	@Autowired
 	private UserRepository repo;
-	@Autowired
-	private ContentService ContentService;
+
 
 	
 	/*
 	 * CRUD ---------
 	 */
 	
-	// Creacion usuario ver el seteo de plataformas //
+	// CREAR
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public User createUser(String name, String surname, String email, String password) throws ErrorException {
-		
+	public void createUser(String name, String surname, String email, String password) throws ErrorException {
+
 		validate(name, surname, email, password);
 		
-		User user = new User();
+		Users user = new Users();
 		user.setName(name);
 		user.setSurname(surname);
 		user.setEmail(email);
-		user.setPassword(new BCryptPasswordEncoder().encode(password));
+        String encrypted = new BCryptPasswordEncoder().encode(password);
+        user.setPassword(encrypted);
 		
-		return repo.save(user);
+		repo.save(user);
 
 	}
 	
 	//MODIFICAR
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public User modifyUsr(String name, String surname, String email, String password) throws ErrorException{
+	public void modifyUsr(String id, String name, String surname, String email, String password) throws ErrorException{
 		
-		validate(name, surname, email, password);
+		try {
+			Users users = repo.getById(id);
+			users.setName(name);
+			users.setSurname(surname);
+			users.setEmail(email);
+	        String encrypted = new BCryptPasswordEncoder().encode(password);
+	        users.setPassword(encrypted);
+			
+			repo.save(users);
+			
+		} catch (Exception e) {
+			throw new ErrorException("Huno un problema en la actualizacion del Usuario");
+		}
 		
-		User user = new User();
-		user.setName(name);
-		user.setSurname(surname);
-		user.setEmail(email);
-		user.setPassword(new BCryptPasswordEncoder().encode(password));
-		
-		return repo.save(user);
-		
+	
 	}
 	
 	//ELIMINAR
@@ -68,11 +88,43 @@ public class UserService {
 			}
 			
 		}
+	
+	
+	/*
+	 * BUSQUEDAS --------
+	 * 
+	 */
+	
+	public Users returnUser(String id) {
+		Users u = repo.getById(id);
+		return u;
+		
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Users> listUsers(){
+		return repo.findAll();
+	}
+	
+	@Transactional(readOnly=true)
+	public Users findById(String id) throws ErrorException{
+		Optional<Users> answer = repo.findById(id);
+		
+		if(!answer.isEmpty()) {
+			return answer.get();
+			
+		}else {
+			throw new ErrorException("No existe usuario con dicho id");
+		}
+	}
+	
 	/*
 	 * VALIDATION ---------
 	 */
 	// Agregar UserRepository.searchByEmail/searchByMovie/searchBySerie/searchByPlatform //
 	public void validate(String name, String surname, String email, String password) {
+
+		
 		if (name == null || name.isEmpty() || name.contains("  ")) {
 			throw new ValidationError("Debe tener un nombre valido");
 		}
@@ -90,4 +142,23 @@ public class UserService {
 		}
 	}
 
+	//PERMISOS
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Users user = repo.searchByEmail(email);
+				
+				if (user != null) {
+					List<GrantedAuthority> permissions = new ArrayList<>();
+					GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + user.getRol().toString());
+					permissions.add(p);
+					ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+					HttpSession session = attr.getRequest().getSession(true);
+					session.setAttribute("usuario", user);
+					return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+							permissions);
+				}
+				return null;
+	}
+	
+	
 }
