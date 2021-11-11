@@ -3,6 +3,7 @@ package com.StreamCatch.app.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,17 +35,33 @@ public class PlatformController implements ErrorHandler{
 		List<Platform> myPlatforms = platService.listPlatforms();
 		userModel.addAttribute("platforms", myPlatforms);
 
-		return "platform";
+		return "pruebaFacu/platform";
+
+	}
+	
+	// VER UNA PLATAFORMA //
+	@GetMapping("/view/{id}")
+	public String viewPlatform(ModelMap userModel, @PathVariable("id") String id) {
+		
+		try {
+			userModel.addAttribute("platform", platService.findById(id));
+		} catch (Exception e) {
+			userModel.put("error", e.getMessage());
+		}
+		
+
+		return "platform/platformView.html";
 
 	}
 	
 	// CREAR PLATAFORMAS //
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/create")
 	public String createPlatform(){
 		
-		return "createPlatform";		
+		return "pruebaFacu/createPlatform";		
 	}
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/create")
 	public String runCreate(ModelMap model, @RequestParam("file") MultipartFile file, @RequestParam("name") String name, 
 			@RequestParam("price") String price) {
@@ -56,12 +73,13 @@ public class PlatformController implements ErrorHandler{
 
 		} catch (Exception e) {
 			model.put("error", e.getMessage());
-			return "createPlatform";
+			return "pruebaFacu/createPlatform";
 		}
 
 	}
 	
 	// UPDATEAR PLATAFORMAS //
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/update/{id}")
 	public String update(ModelMap model, @PathVariable("id") String id) {
 		try {
@@ -71,9 +89,10 @@ public class PlatformController implements ErrorHandler{
 			return this.errorHandler(e, model);
 		}
 		
-		return "modPlatform.html";
+		return "pruebaFacu/modPlatform.html";
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/update/{id}")
 	public String updateUser(ModelMap model, @PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("name") String name, 
 							@RequestParam("price") String price) {
@@ -91,6 +110,7 @@ public class PlatformController implements ErrorHandler{
 	}
 	
 	// ELIMINAR PLATAFORMAS //
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/remove/{id}")
 	public String remove(ModelMap model, @PathVariable("id") String id) {
 		

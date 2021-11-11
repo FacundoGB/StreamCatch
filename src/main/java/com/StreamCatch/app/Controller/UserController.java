@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.StreamCatch.app.Entity.Users;
+import com.StreamCatch.app.Exceptions.ErrorException;
+import com.StreamCatch.app.Exceptions.ValidationError;
 import com.StreamCatch.app.Interfaces.ErrorHandler;
 import com.StreamCatch.app.Service.UserService;
 
@@ -20,56 +22,47 @@ import com.StreamCatch.app.Service.UserService;
 
 @Controller
 @RequestMapping("/usuario")
-public class UserController implements ErrorHandler {
+public class UserController {
 
 	@Autowired
 	private UserService usrService;
-	private final String viewPath = "usuario/";
 	
 	
-	// LISTAR USUARIOS //
-	@GetMapping("/list")
-	public String index(ModelMap userModel) {
+	// REGISTRAR //
+	@GetMapping("/register")
+	public String register() {
 
-		List<Users> myUsers = usrService.listUsers();
-		userModel.addAttribute("users", myUsers);
-
-		return "user";
+		return "register/REGISTROUSUARIOSC";
 
 	}
 	
-	// CREAR USUARIOS //
-	@GetMapping("/create")
-	public String addAuthors(){
-		
-		return "registerUser";		
-	}
-	
-	@PostMapping("/create")
+	@PostMapping("/register")
 	public String Create(ModelMap model, @RequestParam("name") String name, 
 			@RequestParam("surname") String surname, @RequestParam("email") String email, 
-			@RequestParam("password") String password) {
+			@RequestParam("password") String password) throws ValidationError {
 
 		try {
 
 			usrService.createUser(name, surname, email, password);
-			return "redirect:/usuario/list";
+			return "redirect:/usuario/login";
 
 		} catch (Exception e) {
 			model.put("error", e.getMessage());
-			return "registerUser";
+			return "REGISTROUSUARIOSC";
 		}
 
 	}
 	
+	// ------------------ //
+	
 	// UPDATEAR USUARIOS //
 	@GetMapping("/update/{id}")
-	public String update(ModelMap model, @PathVariable("id") String id) {
+	public String update(ModelMap model, @PathVariable("id") String id) throws ValidationError  {
 		try {
 			model.addAttribute("users", usrService.findById(id));
 			
 		} catch (Exception e) {
-			return this.errorHandler(e, model);
+			model.put("error", e.getMessage());
 		}
 		
 		return "modUser.html";
@@ -78,13 +71,13 @@ public class UserController implements ErrorHandler {
 	@PostMapping("/update/{id}")
 	public String updateUser(ModelMap model, @PathVariable("id") String id, @RequestParam("name") String name, 
 								@RequestParam("surname") String surname, @RequestParam("email") String email, 
-								@RequestParam("password") String password) {
+								@RequestParam("password") String password) throws ValidationError {
 		
 		try {
 			usrService.modifyUsr(id, name, surname, email, password);
 			
 		} catch (Exception e) {
-			this.errorHandler(e, model);
+			model.put("error", e.getMessage());
 		}
 		
 		return "redirect:/usuario/list";
@@ -92,20 +85,10 @@ public class UserController implements ErrorHandler {
 	
 	// ELIMINAR USUARIOS //
 	@GetMapping("/remove/{id}")
-	public String remove(ModelMap model, @PathVariable("id") String id) {
-		
-		try {
+	public String remove(ModelMap model, @PathVariable("id") String id) throws ErrorException {
+
 			usrService.removeById(id);
 			return "redirect:/usuario/list";
-			
-		} catch (Exception e) {
-			return this.errorHandler(e, model);
-		}
 	}
-	
-	@Override
-	public String errorHandler(Exception e, ModelMap model) {
-		model.addAttribute("err", e.getMessage());
-		return this.index(model);
-	}
+
 }

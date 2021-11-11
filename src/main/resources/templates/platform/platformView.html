@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head -->
+
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+
+  <main>
+
+    <table class="row g-3" th:action="@{/platform/view/__${platform.id}__}">
+
+    	<tbody>
+    		
+    		<tr>
+    			<td style="width: 50px; height: 50px"><img alt="" th:src="*{'data:image/jpeg;base64,'+{Platform.image}}" style="width: 100px; height: 100px"></td>
+    		</tr>
+    		
+    	</tbody>
+ 		
+    </table>
+
+
+
+
+
+
+
+
+
+  </main>
+
+  <footer th:replace="/fragments/footer :: footer"></footer>
+
+</body>
+
+</html>

@@ -4,6 +4,7 @@ package com.StreamCatch.app.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +48,7 @@ public class ContentController implements ErrorHandler {
 	
 	
 	//////////////////////////////// CREAR CONTENIDO ///////////////////////////////////	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/create")
 	public String addContent() {
 
@@ -55,7 +56,7 @@ public class ContentController implements ErrorHandler {
 
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/create")
 	public String runCreate(ModelMap model, @RequestParam("file") MultipartFile file, @RequestParam("name") String name) {
 
@@ -73,7 +74,7 @@ public class ContentController implements ErrorHandler {
 	
 	
 	/////////////////////////////// MODIFICAR CONTENIDO //////////////////////////////////////
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/update/{id}")
 	public String update(ModelMap model, @PathVariable("id") String id) {
 		try {
@@ -86,7 +87,7 @@ public class ContentController implements ErrorHandler {
 		return "modContent";
 	}
 	
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/update/{id}")
 	public String updateContent(ModelMap model, @RequestParam("file") MultipartFile file, 
 			@RequestParam("name") String name, @PathVariable("id") String id) {
@@ -108,7 +109,7 @@ public class ContentController implements ErrorHandler {
 	
 	
 	//////////////////////////////////// ELIMINAR CONTENIDO /////////////////////////////////////
-	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/remove/{id}")
 	public String remove(ModelMap model, @PathVariable("id") String id) {
 			

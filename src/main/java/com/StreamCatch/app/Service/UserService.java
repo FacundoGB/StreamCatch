@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,18 +43,27 @@ public class UserService implements UserDetailsService{
 	
 	// CREAR
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void createUser(String name, String surname, String email, String password) throws ErrorException {
+	public Users createUser(String name, String surname, String email, String password) throws ErrorException {
 
 		validate(name, surname, email, password);
 		
-		Users user = new Users();
-		user.setName(name);
-		user.setSurname(surname);
-		user.setEmail(email);
-        String encrypted = new BCryptPasswordEncoder().encode(password);
-        user.setPassword(encrypted);
+		Users u = new Users();
+		u.setName(name);
+		u.setSurname(surname);
+		u.setEmail(email);
 		
-		repo.save(user);
+        String encrypted = new BCryptPasswordEncoder().encode(password);
+        u.setPassword(encrypted);
+		
+        try {
+			repo.save(u);
+			return u;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 
 	}
 	
@@ -61,14 +72,14 @@ public class UserService implements UserDetailsService{
 	public void modifyUsr(String id, String name, String surname, String email, String password) throws ErrorException{
 		
 		try {
-			Users users = repo.getById(id);
-			users.setName(name);
-			users.setSurname(surname);
-			users.setEmail(email);
+			Users u = repo.getById(id);
+			u.setName(name);
+			u.setSurname(surname);
+			u.setEmail(email);
 	        String encrypted = new BCryptPasswordEncoder().encode(password);
-	        users.setPassword(encrypted);
+	        u.setPassword(encrypted);
 			
-			repo.save(users);
+			repo.save(u);
 			
 		} catch (Exception e) {
 			throw new ErrorException("Huno un problema en la actualizacion del Usuario");
@@ -145,19 +156,28 @@ public class UserService implements UserDetailsService{
 	//PERMISOS
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Users user = repo.searchByEmail(email);
+		Users u = repo.searchByEmail(email);
+		
+		if (u == null) {
+			return null;
+		}		
 				
-				if (user != null) {
-					List<GrantedAuthority> permissions = new ArrayList<>();
-					GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + user.getRol().toString());
-					permissions.add(p);
-					ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-					HttpSession session = attr.getRequest().getSession(true);
-					session.setAttribute("usuario", user);
-					return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-							permissions);
-				}
-				return null;
+		
+		List<GrantedAuthority> permissions = new ArrayList<>();
+		GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_" + u.getRol().toString());
+		permissions.add(p1);
+
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+		// Se crea la sesion y se agrega el cliente a la misma
+		HttpSession session = attr.getRequest().getSession(true);
+		session.setAttribute("usersession", u);
+
+		// Se retorna el usuario con sesion "iniciada" y con permisos
+		return new User(email, u.getPassword(), permissions);
+
+		
+		
 	}
 	
 	
