@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.StreamCatch.app.Entity.Platform;
 import com.StreamCatch.app.Entity.Users;
-import com.StreamCatch.app.Intefaces.ErrorHandler;
+import com.StreamCatch.app.Interfaces.ErrorHandler;
 import com.StreamCatch.app.Service.PlatformService;
 
 @Controller

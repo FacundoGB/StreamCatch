@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.StreamCatch.app.Entity.Users;
-import com.StreamCatch.app.Intefaces.ErrorHandler;
+import com.StreamCatch.app.Interfaces.ErrorHandler;
 import com.StreamCatch.app.Service.UserService;
 
 

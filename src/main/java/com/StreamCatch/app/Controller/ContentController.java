@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.StreamCatch.app.Entity.Content;
-import com.StreamCatch.app.Intefaces.ErrorHandler;
+import com.StreamCatch.app.Interfaces.ErrorHandler;
 import com.StreamCatch.app.Service.ContentService;
 
 
