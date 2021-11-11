@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- Head -->
-<head th:replace="/fragments/head :: head"></head>
 
+<head th:replace="/fragments/head :: head"></head>
+<header th:replace="/fragments/header :: header"></header>
 <body>
 
 <main>
@@ -11,7 +12,7 @@
             <div class="menu">
                 <nav>
                     <ul>
-                        <li><a href="#">Registrarse</a></li>
+                        <li><a href="/src/main/java/com.StreamCatch.app.Controller/UserController.java">Registrarse</a></li>
                         <li><a href="#">Iniciar Sesion</a></li>
                     </ul>
                 </nav>
