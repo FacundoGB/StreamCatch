@@ -32,7 +32,7 @@ public class UserController {
 	@GetMapping("/register")
 	public String register() {
 
-		return "register/REGISTROUSUARIOSC";
+		return "registro.html";
 
 	}
 	
@@ -48,7 +48,7 @@ public class UserController {
 
 		} catch (Exception e) {
 			model.put("error", e.getMessage());
-			return "REGISTROUSUARIOSC";
+			return "registro.html";
 		}
 
 	}
