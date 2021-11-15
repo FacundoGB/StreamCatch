@@ -22,10 +22,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.StreamCatch.app.Entity.Platform;
 import com.StreamCatch.app.Entity.Users;
 import com.StreamCatch.app.Exceptions.ErrorException;
+import com.StreamCatch.app.Exceptions.ServiceError;
 import com.StreamCatch.app.Exceptions.ValidationError;
+import com.StreamCatch.app.Repository.PlatformRepository;
 import com.StreamCatch.app.Repository.UserRepository;
+import com.StreamCatch.app.rol.Rol;
+
 
 
 
@@ -34,6 +39,9 @@ public class UserService implements UserDetailsService{
 	
 	@Autowired
 	private UserRepository repo;
+	
+	@Autowired
+	private PlatformService pservice;
 
 
 	
@@ -43,25 +51,28 @@ public class UserService implements UserDetailsService{
 	
 	// CREAR
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public Users createUser(String name, String surname, String email, String password) throws ErrorException {
+	public void createUser(String name, String surname, String email, String password, String idPlatform) throws ServiceError{
 
-		validate(name, surname, email, password);
+		validate(name, surname, email, password, idPlatform);
+		Platform p = pservice.findById(idPlatform);
 		
 		Users u = new Users();
 		u.setName(name);
 		u.setSurname(surname);
 		u.setEmail(email);
+		u.setPlatforms(p);
+		u.setRol(Rol.USER);
 		
         String encrypted = new BCryptPasswordEncoder().encode(password);
         u.setPassword(encrypted);
 		
         try {
 			repo.save(u);
-			return u;
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			
 		}
 		
 
@@ -133,23 +144,30 @@ public class UserService implements UserDetailsService{
 	 * VALIDATION ---------
 	 */
 	// Agregar UserRepository.searchByEmail/searchByMovie/searchBySerie/searchByPlatform //
-	public void validate(String name, String surname, String email, String password) {
+	public void validate(String name, String surname, String email, String password, String idPlatform) throws ServiceError {
 
+		Optional<Users> u = repo.validationEmail(email);
+		if (u.isPresent()) {
+			throw new ServiceError("Este email ya esta asignado a un Usuario");
+		}
 		
 		if (name == null || name.isEmpty() || name.contains("  ")) {
-			throw new ValidationError("Debe tener un nombre valido");
+			throw new ServiceError("Debe tener un nombre valido");
 		}
 
 		if (surname == null || surname.isEmpty() || surname.contains("  ")) {
-			throw new ValidationError("Debe tener un apellido valido");
+			throw new ServiceError("Debe tener un apellido valido");
 		}
 
 		if (email == null || email.isEmpty() || email.contains("  ")) {
-			throw new ValidationError("Debe tener un email valido");
+			throw new ServiceError("Debe tener un email valido");
 		}
 
 		if (password == null || password.isEmpty() || password.length() < 8) {
-			throw new ValidationError("Debe tener una clave valida");
+			throw new ServiceError("Debe tener una clave valida");
+		}
+		if (idPlatform.isBlank() || idPlatform.isEmpty() || idPlatform == null) {
+			throw new ServiceError("Error: ID plataforma invalido!");
 		}
 	}
 
@@ -157,26 +175,23 @@ public class UserService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Users u = repo.searchByEmail(email);
-		
-		if (u == null) {
-			return null;
-		}		
-				
-		
-		List<GrantedAuthority> permissions = new ArrayList<>();
-		GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_" + u.getRol().toString());
-		permissions.add(p1);
 
-		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		if (u != null) {
+			List<GrantedAuthority> permissions = new ArrayList<>();
+			GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_" + u.getRol().toString());
+			permissions.add(p1);
 
-		// Se crea la sesion y se agrega el cliente a la misma
-		HttpSession session = attr.getRequest().getSession(true);
-		session.setAttribute("usersession", u);
+			ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 
-		// Se retorna el usuario con sesion "iniciada" y con permisos
-		return new User(email, u.getPassword(), permissions);
+			// Se crea la sesion y se agrega el cliente a la misma
+			HttpSession session = attr.getRequest().getSession(true);
+			session.setAttribute("user", u);
 
-		
+			// Se retorna el usuario con sesion "iniciada" y con permisos
+			return new org.springframework.security.core.userdetails.User(u.getEmail(), u.getPassword(), permissions);
+		}
+
+		return null;
 		
 	}
 	

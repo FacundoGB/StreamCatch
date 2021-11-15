@@ -11,8 +11,8 @@
             <div class="menu">
                 <nav>
                     <ul>
-                        <li><a href="#">Registrarse</a></li>
-                        <li><a href="#">Iniciar Sesion</a></li>
+                        <li><a href="/usuario/registro">Registrarse</a></li>
+                        <li><a href="/login">Iniciar Sesion</a></li>
                     </ul>
                 </nav>
             </div>
@@ -27,7 +27,7 @@
 
     <section class="section3">
         <div class="buscar">
-            <input type="text" placeholder="Buscar" required>
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Buscar" required>
             <button type="button" class="btn btn-warning"><i class="fas fa-search"></i></button>
         </div>
     </section>

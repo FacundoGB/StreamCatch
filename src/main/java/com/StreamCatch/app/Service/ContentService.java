@@ -110,6 +110,16 @@ public class ContentService{
 		}
 	}
 	
+	@Transactional(readOnly=true)
+	public Content getByKeyword(String keyword) throws ErrorException {
+		Optional<Content> answer = repo.findByKeyword(keyword);
+		
+		if(!answer.isEmpty()) {
+			return answer.get();
+		}else {
+			throw new ErrorException("No existe dicho contenido");
+		}
+	}
 	
 	// VALIDACIÓN DE CONTENIDO //
 	

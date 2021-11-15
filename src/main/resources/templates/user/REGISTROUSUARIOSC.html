@@ -1,62 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-  <script src="script src=" https://kit.fontawesome.com/6b7595bff0.js" crossorigin="anonymous"></script>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StreamCatch</title>
-  <link rel="stylesheet" href="/src/main/resources/static/css/REGISTROUSUARIOSC.css">
-  <link rel="stylesheet" href="/src/main/resources/static/css/fuentes.css">
-  
-  </head>
-  <body>
-    <section class="section1">
-      <header>
-        <div class="menu">
-          <nav>
-            <ul>
-              <li><a href="#">Inicio</a> </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-    </section>
-    <div class="contenedor">
-      <center>
-        <div class="d-flex justify-content-center">
-          <section class="form-register">
-            <div class="form1">
-              <h4>Crear cuenta</h4>
-              <input class="controls" type="text" name="nombres" id="nombres" placeholder="Ingrese su nombre"><br>
-              <input class="controls" type="text" name="apellidos" id="apellidos" placeholder="Ingrese su apellido"><br>
-              <input class="controls" type="text" name="correo" id="correo" placeholder="Ingrese su correo"><br>
-              <input class="controls" type="text" name="contraseña" id="contraseña" placeholder="Ingrese su contraseña"><br>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--  <script src="script src=" https://kit.fontawesome.com/6b7595bff0.js" crossorigin="anonymous"></script>  -->
+
+<head>
+
+	<head th:replace="/fragments/head :: head"></head>
+	<link rel="stylesheet" href="/css/REGISTROUSUARIOSC.css">
+</head>
+
+<body>
+	<section class="section1">
+		<header>
+			<div class="menu">
+				<nav>
+					<ul>
+						<li><a href="#">Inicio</a> </li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+	</section>
+
+	<div th:if="${error}!=null" class="card text-white bg-danger mb-3">
+		<div class="card-body">
+			<h5 class="card-title">Error</h5>
+			<p class="card-text" th:text="${error}"></p>
+		</div>
+	</div>
+
+	<form class="form1" action="/usuario/registro" method="POST">
+
+		<h4>Crear cuenta</h4>
+		<p th:if="${error != null}" th:text="${error}" style=color:red;></p>
+		<input class="controls" type="text" name="name" id="nombres" placeholder="Ingrese su nombre"><br>
+		<input class="controls" type="text" name="surname" id="apellidos" placeholder="Ingrese su apellido"><br>
+		<input class="controls" type="text" name="email" id="correo" placeholder="Ingrese su correo"><br>
+		<input class="controls" type="text" name="password" id="clave" placeholder="Ingrese su clave"><br>
+
+		  <table class="form2">
+			<thead>
+				<th>Seleccione las paltaformas contratadas</th>
+			</thead>
+			<tbody th:each="Platform : ${platforms}">
+				<tr>
+				
+
+					<td style="width: 50px; height: 50px">
+						<img alt="" th:src="*{'data:image/jpeg;base64,'+{Platform.image}}"
+							style="width: 100px; height: 100px">
+						<input type="checkbox" name="idPlatform" th:value="${Platform.id}">
+						<p th:text="${Platform.name}"></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+              <button class="btn btn-primary" type="submit">SAVE</button>
             </div>
-            <div class="form2">
-              <p>Seleccione las paltaformas contratadas</p>
-              <label class="checkbox"><input type="checkbox" id="cbox1netflix" value="cbox1netflix">
-                <p>Netflix</p>
-              </label>
-              <label class="checkbox"><input type="checkbox" id="cbox2amazonprime" value="cbox2amazonprime">
-              <p>Amazon Prime</p>
-              </label>
-              <lavel class="checkbox"><input type="checkbox" id="cbox3starchannel" value="cbox3starchannel">
-                <p>Star Channel</p>
-              </label>
-            </div>
-            <div>
-              
-                <input class="button" type="submit" value="Registrarme">
-              
-            </div>       
-          </section>
-        </div>
-      </center>
-    </div>
-    <footer class="pie-pagina">
-      <div class="col-md-12 centrado"><small>&copy;2021 <b>StreamCatch</b>Todos los derechos reservados</small>
-      </div>
-    </footer>
-  </body>
+
+	</form>
+
+	<footer class="pie-pagina" th:replace="/fragments/footer :: footer"></footer>
+
+</body>
+
 </html>

@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -34,6 +35,7 @@ public class Users {
 	
 	@ManyToOne
 	private Platform platforms;
+	
 	@ManyToOne
 	private Content content;
 

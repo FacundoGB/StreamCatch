@@ -41,6 +41,20 @@ public class ContentController implements ErrorHandler {
 	}
 	
 	
+	@GetMapping("/{id}")
+	public String index(ModelMap contentModel, @PathVariable("id") String id) {
+
+		try {
+			contentModel.addAttribute("contebt", contentService.findById(id));
+		} catch (Exception e) {
+			contentModel.put("error", e.getMessage());
+		}
+		
+		return "content";
+
+	}
+	
+	
 	/*/@GetMapping()
 	public String contentPanel(ModelMap ContentModel) {	
 		return null;

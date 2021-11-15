@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import com.StreamCatch.app.Entity.Platform;
 import com.StreamCatch.app.Entity.Users;
 import com.StreamCatch.app.Exceptions.ErrorException;
 import com.StreamCatch.app.Exceptions.ValidationError;
 import com.StreamCatch.app.Interfaces.ErrorHandler;
+import com.StreamCatch.app.Service.PlatformService;
 import com.StreamCatch.app.Service.UserService;
 
 
@@ -26,29 +27,44 @@ public class UserController {
 
 	@Autowired
 	private UserService usrService;
+	@Autowired
+	private PlatformService platService;
 	
+	
+	// LISTAR DATOS USUARIO //
+	@GetMapping("/{id}")
+	public String userData(ModelMap model) {
+		return null;
+	}
+	
+	
+	// ------------------ //
 	
 	// REGISTRAR //
-	@GetMapping("/register")
-	public String register() {
+	@GetMapping("/registro")
+	public String register(ModelMap model) {
+		List<Platform> myPlatforms = platService.listPlatforms();
+		model.addAttribute("platforms", myPlatforms);
 
-		return "register/REGISTROUSUARIOSC";
+		return "user/REGISTROUSUARIOSC.html";
 
 	}
 	
-	@PostMapping("/register")
+	@PostMapping("/registro")
 	public String Create(ModelMap model, @RequestParam("name") String name, 
 			@RequestParam("surname") String surname, @RequestParam("email") String email, 
-			@RequestParam("password") String password) throws ValidationError {
+			@RequestParam("password") String password, @RequestParam("idPlatform")String idPlatform) throws Exception {
 
 		try {
 
-			usrService.createUser(name, surname, email, password);
-			return "redirect:/usuario/login";
+			usrService.createUser(name, surname, email, password, idPlatform);
+			System.out.println("EXITO");
+			return "user/login";
 
 		} catch (Exception e) {
-			model.put("error", e.getMessage());
-			return "REGISTROUSUARIOSC";
+			System.out.println(e.getMessage());
+			model.put("error", e.getLocalizedMessage());
+			return "redirect:/index.html";
 		}
 
 	}
@@ -83,6 +99,9 @@ public class UserController {
 		return "redirect:/usuario/list";
 	}
 	
+	// ------------------ //
+	
+	
 	// ELIMINAR USUARIOS //
 	@GetMapping("/remove/{id}")
 	public String remove(ModelMap model, @PathVariable("id") String id) throws ErrorException {
@@ -90,5 +109,6 @@ public class UserController {
 			usrService.removeById(id);
 			return "redirect:/usuario/list";
 	}
+	// ------------------ //
 
 }

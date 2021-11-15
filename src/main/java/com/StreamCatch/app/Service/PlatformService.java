@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.StreamCatch.app.Entity.Platform;
 
 import com.StreamCatch.app.Exceptions.ErrorException;
+import com.StreamCatch.app.Exceptions.ServiceError;
 import com.StreamCatch.app.Exceptions.ValidationError;
 import com.StreamCatch.app.Repository.PlatformRepository;
 
@@ -113,14 +114,14 @@ public class PlatformService {
 	
 	
 	@Transactional(readOnly=true)
-	public Platform findById(String id) throws ErrorException{
+	public Platform findById(String id) throws ServiceError{
 		Optional<Platform> answer = repo.findById(id);
 		
 		if(!answer.isEmpty()) {
 			return answer.get();
 			
 		}else {
-			throw new ErrorException("No existe Plataforma con dicho id");
+			throw new ServiceError("No existe Plataforma con dicho id");
 		}
 	}
 	

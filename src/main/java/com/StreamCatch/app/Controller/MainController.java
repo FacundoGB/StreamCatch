@@ -9,11 +9,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import com.StreamCatch.app.Entity.Platform;
 import com.StreamCatch.app.Service.PlatformService;
+
 
 
 
@@ -33,15 +36,36 @@ public class MainController {
 	}
 
 	@GetMapping("/login")
-	public String login(@RequestParam(required = false) String error, ModelMap modelo) {
+	public String login(HttpSession session, Authentication user, @RequestParam(required = false) String error, ModelMap modelo) {
 
-		if (error != null) {
-			modelo.put("error", "Nombre de usuario o clave incorrecta");
+		try {
+			
+			if (user.getName() != null) {
+				return "redirect:/";
+				
+			} else {
+				
+				if (error != null && !error.isEmpty()) {
+					modelo.put("error", "Nombre de usuario o clave incorrecta");
+					
+				}
+				return "user/login";
+			}
+			
+		} catch (Exception e) {
+			if (error != null && !error.isEmpty()) {
+				modelo.put("error", "La dirección de mail o la contraseña que ingresó son incorrectas.");
+			}
+
+			return "user/login";
 		}
-
-		return "user/login";
 	}
 	
+	@GetMapping("/loginsuccess")
+	public String loginresolver() {
+				
+		return "redirect:/";
+	}
 
 
 }

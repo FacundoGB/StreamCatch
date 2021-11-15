@@ -14,4 +14,9 @@ public interface ContentRepository extends JpaRepository<Content, String>{
 		
 	@Query("SELECT u from Content u WHERE u.id = :id")
 	public Optional<Content> findById(@Param("id") String id);
+	
+	@Query("SELECT c.id FROM Content c WHERE c.name like %:keyword%")
+	public Optional<Content> findByKeyword(@Param("keyword") String keyword);
+	
 }
+
