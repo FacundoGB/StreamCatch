@@ -17,6 +17,7 @@ import com.StreamCatch.app.Exceptions.ErrorException;
 import com.StreamCatch.app.Exceptions.ValidationError;
 import com.StreamCatch.app.Repository.ContentRepository;
 
+
 @Service
 public class ContentService{
 	
@@ -125,5 +126,12 @@ public class ContentService{
 		
 	}
 
+	//buscar pelicula
+	public List<Content> listAll(String keyword) {
+		if (keyword != null) {
+			return repo.search(keyword);
+		}
+		return repo.findAll();
+	}
 	
 }

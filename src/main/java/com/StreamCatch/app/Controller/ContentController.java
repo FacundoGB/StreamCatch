@@ -4,8 +4,10 @@ package com.StreamCatch.app.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.StreamCatch.app.Entity.Content;
 import com.StreamCatch.app.Interfaces.ErrorHandler;
 import com.StreamCatch.app.Service.ContentService;
-
 
 @Controller
 @RequestMapping("/content")
@@ -128,6 +129,15 @@ public class ContentController implements ErrorHandler {
 	public String errorHandler(Exception e, ModelMap model) {
 		model.addAttribute("err", e.getMessage());
 		return this.index(model);
+	}
+	//buscar contenido
+	@RequestMapping("/")
+	public String viewHomePage(Model model, @Param("keyword") String keyword) {
+		List<Content> listContent = contentService.listAll(keyword);
+		model.addAttribute("listcontent", listContent);
+		model.addAttribute("keyword", keyword);
+		
+		return "index";
 	}
 
 }

@@ -24,13 +24,38 @@
             <img src="img/Logo_StreamCatch.png" alt="">
         </div>
     </section>
-
     <section class="section3">
-        <div class="buscar">
-            <input type="text" placeholder="Buscar" required>
-            <button type="button" class="btn btn-warning"><i class="fas fa-search"></i></button>
-        </div>
-    </section>
+    <div class="buscar">	
+	<br/><br/>
+	<form th:action="@{/}">
+		<input type="text" name="keyword" id="keyword" placeholder="Buscar" size="50" th:value="${keyword}" required /><button type="submit" class="btn btn-warning"><i class="fas fa-search"></i></button>
+	</form>
+	<br/><br/>
+	
+	<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>		
+				
+				<th></th>				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="content : ${listcontent}">
+				<td th:text="${content.id}">Product ID</td>
+				<td th:text="${content.name}">Name</td>
+				<td th:text="${content.id_platform_id}">Id Plataforma</td>
+				<td th:text="${content.image}">Imagen</td>
+				<td>
+					<a th:href="@{'/edit/' + ${content.id}}">Edit</a>
+					<a th:href="@{'/delete/' + ${content.id}}">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</section>
     <section class="section4">
 		<div class="titulo-servicios">
 			<h2>SERVICIOS DISPONIBLES</h2>
