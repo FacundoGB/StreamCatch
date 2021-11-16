@@ -2,16 +2,24 @@ package com.StreamCatch.app.Entity;
 
 
 
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.StreamCatch.app.rol.Rol;
+
+
+
 
 @Entity
-public class User {
+public class Users {
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid" , strategy = "uuid2")
@@ -20,12 +28,23 @@ public class User {
 	private String surname;
 	private String email;
 	private String password;
+	
+	@Enumerated(EnumType.STRING)
+	private Rol rol;
+	
 	@ManyToOne
 	private Platform platforms;
 	@ManyToOne
 	private Content content;
 
 	
+	
+	public Rol getRol() {
+		return rol;
+	}
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
 	public String getId() {
 		return id;
 	}
