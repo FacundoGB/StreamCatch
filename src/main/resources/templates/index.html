@@ -2,6 +2,9 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- Head -->
 <head th:replace="/fragments/head :: head"></head>
+<!-- Header -->
+<header th:replace="/fragments/header :: header"></header>
+
 
 <body>
 
@@ -19,19 +22,19 @@
         </header>
     </section>
 
-    <section class="section2">
+    <section class="section2" id = "bcolor">
         <div class="logo">
             <img src="img/Logo_StreamCatch.png" alt="">
         </div>
     </section>
 
-    <section class="section3">
+    <section class="section3" id = "bcolor">
         <div class="buscar">
             <input type="text" name="keyword" th:value="${keyword}" placeholder="Buscar" required>
             <button type="button" class="btn btn-warning"><i class="fas fa-search"></i></button>
         </div>
     </section>
-    <section class="section4">
+    <section class="section4" id= "bcolor">
 		<div class="titulo-servicios">
 			<h2>SERVICIOS DISPONIBLES</h2>
 		</div>

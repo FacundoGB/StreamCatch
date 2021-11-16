@@ -11,6 +11,9 @@ body{
     min-height: 100vh;
    
 }
+section{
+	background: ;
+}
 header{
     background: #6C6969;
     width: 100%;
@@ -132,6 +135,9 @@ color: white;
     margin-top: -60px;
     
 
+}
+#bcolor{
+	background: #292929;
 }
 
   /*FOOTER*/
