@@ -11,9 +11,6 @@ body{
     min-height: 100vh;
    
 }
-section{
-	background: ;
-}
 header{
     background: #6C6969;
     width: 100%;
@@ -21,49 +18,19 @@ header{
     content: '';
     display: flex;
 }
-.menu{
-    width: 900px;
-    margin: 0 auto;
-}
-img{
-    width: 120px;
-    float: left;
-    padding: 8px;
-
-}
-nav{
-    float: right;
+nav ul{
+	float: right;
+	margin-right: 20px;
+	padding: 20px;
 }
 nav ul li{
-    list-style: none;
-    margin-left: 35px;
-    padding: 12px 0;
-    float: left;
-    position: relative;
-    left: 210px ;
+	display: inline-block;
 }
-
 nav ul li a{
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
+	padding: 10px;
+	color: white;
+	text-transform: uppercase;
 }
-nav ul li a::before{
-    display: block;
-    content: '';
-    width: 0%;
-    background: #efbb1e;
-    height: 5px;
-    top: 0;
-    position: absolute;
-    transition: width 0.2s;
-}
-nav ul li a:hover:before{
-    width: 100%;
-    
-
-}
-
 /*LOGO*/
 .logo{
     display: flex;
