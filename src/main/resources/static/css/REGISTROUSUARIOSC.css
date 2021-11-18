@@ -61,6 +61,7 @@ nav ul{
     color: #fff;
     margin-left: auto;
     margin-right: auto;
+    align-items: center;
 }
 
 h4 {
@@ -76,6 +77,7 @@ h4 {
     border: 1px solid #fff;
     font-size: 22px;
     text-align: center;
+    align-items: center;
 }
 
 .form2 p {
@@ -88,6 +90,7 @@ h4 {
     padding: 5px;
     margin: 10px;
     border: 2px;
+    float: 0px;
 }
 
 .btn btn-primary {

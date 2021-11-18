@@ -11,6 +11,7 @@
 </header>
 
 <body>
+<div class="container-fluid">
 	<section class="section1">
 		<header> 
          <nav class="navbar navbar-expand-lg navbar-light">
@@ -33,9 +34,11 @@
 			<p class="card-text" th:text="${error}"></p>
 		</div>
 	</div>
-
+<center>
 	<form class="form-register" action="/usuario/registro" method="POST">
-
+      <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
 		<h4>Crear cuenta</h4>
 		<p th:if="${error != null}" th:text="${error}" style=color:red;></p>
 		<input class="controls" type="text" name="name" id="nombres" placeholder="Ingrese su nombre"><br>
@@ -63,11 +66,13 @@
 
               <button class="btn btn-primary" type="submit">REGISTRARSE</button>
             </div>
-
+      </div>
+      <div class="col-md-4"></div>
+       </div>
 	</form>
-
+</center>
 	<footer class="pie-pagina" th:replace="/fragments/footer :: footer"></footer>
-
+</div>
 </body>
 
 </html>
