@@ -44,11 +44,13 @@
 		<input class="controls" type="text" name="surname" id="apellidos" placeholder="Ingrese su apellido"><br>
 		<input class="controls" type="text" name="email" id="correo" placeholder="Ingrese su correo"><br>
 		<input class="controls" type="password" name="password" id="clave" placeholder="Ingrese su clave"><br>
-
-		  <table class="form2">
-			<thead>
+<thead>
 				<th>Seleccione las paltaformas contratadas</th>
 			</thead>
+		  <div class="form2">
+		  <div class="row">
+		  <div class="col-md-12">
+			
 			<tbody th:each="Platform : ${platforms}">
 				<tr>
 				
@@ -61,7 +63,9 @@
 					</td>
 				</tr>
 			</tbody>
-		</table>
+		  </div>
+		  </div>
+		</div>
 
               <button class="btn btn-primary" type="submit" >REGISTRARSE</button>
             </div>
