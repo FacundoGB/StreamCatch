@@ -29,6 +29,8 @@ public class PlatformController implements ErrorHandler{
 	
 	
 	// LISTAR PLATAFORMAS //
+	
+	
 	@GetMapping("/list")
 	public String index(ModelMap userModel) {
 
@@ -39,7 +41,10 @@ public class PlatformController implements ErrorHandler{
 
 	}
 	
+	
 	// VER UNA PLATAFORMA //
+	
+	
 	@GetMapping("/view/{id}")
 	public String viewPlatform(ModelMap userModel, @PathVariable("id") String id) {
 		
@@ -54,14 +59,19 @@ public class PlatformController implements ErrorHandler{
 
 	}
 	
+	
 	// CREAR PLATAFORMAS //
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	
+	
+	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //
 	@GetMapping("/create")
 	public String createPlatform(){
 		
 		return "pruebaFacu/createPlatform";		
 	}
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	
+	
+	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //
 	@PostMapping("/create")
 	public String runCreate(ModelMap model, @RequestParam("file") MultipartFile file, @RequestParam("name") String name, 
 			@RequestParam("price") String price) {
@@ -78,8 +88,11 @@ public class PlatformController implements ErrorHandler{
 
 	}
 	
+	
 	// UPDATEAR PLATAFORMAS //
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	
+	
+	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //
 	@GetMapping("/update/{id}")
 	public String update(ModelMap model, @PathVariable("id") String id) {
 		try {
@@ -92,7 +105,8 @@ public class PlatformController implements ErrorHandler{
 		return "pruebaFacu/modPlatform.html";
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	
+	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //
 	@PostMapping("/update/{id}")
 	public String updateUser(ModelMap model, @PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("name") String name, 
 							@RequestParam("price") String price) {
@@ -109,8 +123,11 @@ public class PlatformController implements ErrorHandler{
 		return "redirect:/platform/list";
 	}
 	
+	
 	// ELIMINAR PLATAFORMAS //
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	
+	
+	// @PreAuthorize("hasAnyRole('ROLE_ADMIN')") //
 	@GetMapping("/remove/{id}")
 	public String remove(ModelMap model, @PathVariable("id") String id) {
 		
