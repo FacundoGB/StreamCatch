@@ -111,7 +111,7 @@ public class ContentService{
 	}
 	
 	@Transactional(readOnly=true)
-	public Content getByKeyword(String keyword) throws ErrorException {
+	public Content findByKeyword(String keyword) throws ErrorException {
 		Optional<Content> answer = repo.findByKeyword(keyword);
 		
 		if(!answer.isEmpty()) {
@@ -120,6 +120,27 @@ public class ContentService{
 			throw new ErrorException("No existe dicho contenido");
 		}
 	}
+	
+	
+	
+	// BARRA BUSQUEDA //
+	
+	
+	@Transactional
+	public List<Content> findByName(String q)throws Exception{
+		try {
+			
+			List<Content> entities = this.repo.findByName(q);
+			return entities;
+			
+		}catch (Exception e) {
+			
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	
+	
 	
 	// VALIDACIÓN DE CONTENIDO //
 	

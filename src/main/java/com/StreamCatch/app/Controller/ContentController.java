@@ -45,7 +45,7 @@ public class ContentController implements ErrorHandler {
 	public String index(ModelMap contentModel, @PathVariable("id") String id) {
 
 		try {
-			contentModel.addAttribute("contebt", contentService.findById(id));
+			contentModel.addAttribute("content", contentService.findById(id));
 		} catch (Exception e) {
 			contentModel.put("error", e.getMessage());
 		}
@@ -141,7 +141,31 @@ public class ContentController implements ErrorHandler {
 			return this.errorHandler(e, model);
 		}
 	}
+		
+	
+	// BARRA BUSQUEDA //
+	
+	
+	@GetMapping(value = "/busqueda")
+	public String busquedaContent(ModelMap model, @RequestParam(value="query", required = false) String q) {
+		try {
 			
+			List<Content> content =this.contentService.findByName(q);			
+			model.addAttribute("content", content);
+			model.addAttribute("resultado",q);
+						
+			return "busqueda";
+			
+		}catch (Exception e) {
+			
+			model.addAttribute("error", e.getMessage());
+			return "error" ;
+		}
+	}
+
+	
+	
+	
 		
 	@Override
 	public String errorHandler(Exception e, ModelMap model) {
