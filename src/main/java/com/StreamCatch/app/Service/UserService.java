@@ -51,23 +51,34 @@ public class UserService implements UserDetailsService{
 	
 	// CREAR
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
-	public void createUser(String name, String surname, String email, String password, String idPlatform) throws ServiceError{
-
-		validate(name, surname, email, password, idPlatform);
-		Platform p = pservice.findById(idPlatform);
+	public void createUser(String name, String surname, String email, String password) throws ServiceError{
 		
+//		ArrayList<String> idPlatforms
+		//validate(name, surname, email, password, idPlatform);
+		
+		
+//		for (String idplat : idPlatforms) {
+//			
+//			Platform p = pservice.findById(idplat);
+//			u.getPlatforms().add(p);
+//		}
+
+		//List<Platform> p2 = new ArrayList<>();
+		//p2.add(p);
+		try {
+			
 		Users u = new Users();
 		u.setName(name);
 		u.setSurname(surname);
 		u.setEmail(email);
-		u.setPlatforms(p);
 		u.setRol(Rol.USER);
 		
         String encrypted = new BCryptPasswordEncoder().encode(password);
         u.setPassword(encrypted);
+        u.setStatus(true);
 		
-        try {
-			repo.save(u);
+        
+		repo.save(u);
 			
 			
 		} catch (Exception e) {
@@ -83,6 +94,7 @@ public class UserService implements UserDetailsService{
 	public void modifyUsr(String id, String name, String surname, String email, String password) throws ErrorException{
 		
 		try {
+			validate(name, surname, email, password, id);
 			Users u = repo.getById(id);
 			u.setName(name);
 			u.setSurname(surname);
@@ -93,13 +105,14 @@ public class UserService implements UserDetailsService{
 			repo.save(u);
 			
 		} catch (Exception e) {
+			System.out.println("Error: " + e.getMessage());
 			throw new ErrorException("Huno un problema en la actualizacion del Usuario");
 		}
 		
 	
 	}
 	
-	//ELIMINAR
+	//ELIMINAR USUARIO POR ID
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
 	public void removeById(String id) throws ErrorException {
 			
@@ -111,28 +124,58 @@ public class UserService implements UserDetailsService{
 			
 		}
 	
+	//CAMBIAR ALTA BAJA USUARIO
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { ErrorException.class, Exception.class })
+	public void statusChange(String id) throws ErrorException{
+		
+		try {
+			Users user = repo.getById(id);
+			user.setStatus(!user.getStatus());
+			repo.save(user);
+		} catch (Exception e) {
+			throw new ErrorException("No se pudo modificar el estado de subscripcion del usuario");
+		}
+	}
+	
 	
 	/*
 	 * BUSQUEDAS --------
 	 * 
 	 */
 	
+	//BUSCO USUARIO POR MAIL
+	@Transactional(readOnly=true)
+	public Users searchByEmail(String email) throws ErrorException{
+		Users answer = repo.searchByEmail(email);
+		
+		if (answer != null) {
+			return answer;
+		}else {
+			throw new ErrorException("No se ha encontrado el usuario solicitado");
+		}
+		
+	}
+	
+	//RETORNO UN USUARIO
+	@Transactional(readOnly=true)
 	public Users returnUser(String id) {
 		Users u = repo.getById(id);
 		return u;
 		
 	}
 	
+	//LISTO USUARIOS
 	@Transactional(readOnly=true)
 	public List<Users> listUsers(){
 		return repo.findAll();
 	}
 	
+	//ENCUENTRO UN USUARIO POR ID
 	@Transactional(readOnly=true)
 	public Users findById(String id) throws ErrorException{
 		Optional<Users> answer = repo.findById(id);
 		
-		if(!answer.isEmpty()) {
+		if(answer.isPresent()) {
 			return answer.get();
 			
 		}else {
@@ -166,7 +209,7 @@ public class UserService implements UserDetailsService{
 		if (password == null || password.isEmpty() || password.length() < 8) {
 			throw new ServiceError("Debe tener una clave valida");
 		}
-		if (idPlatform.isBlank() || idPlatform.isEmpty() || idPlatform == null) {
+		if ( idPlatform == null || idPlatform.isEmpty() ) {
 			throw new ServiceError("Error: ID plataforma invalido!");
 		}
 	}
@@ -175,6 +218,7 @@ public class UserService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Users u = repo.searchByEmail(email);
+		
 
 		if (u != null) {
 			List<GrantedAuthority> permissions = new ArrayList<>();
@@ -186,9 +230,9 @@ public class UserService implements UserDetailsService{
 			// Se crea la sesion y se agrega el cliente a la misma
 			HttpSession session = attr.getRequest().getSession(true);
 			session.setAttribute("user", u);
-
+		System.out.println(session.toString());
 			// Se retorna el usuario con sesion "iniciada" y con permisos
-			return new org.springframework.security.core.userdetails.User(u.getEmail(), u.getPassword(), permissions);
+			return new User(u.getEmail(), u.getPassword(), permissions);
 		}
 
 		return null;

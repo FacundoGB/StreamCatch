@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -13,11 +14,29 @@
 
 </head>
 <body>
-	
+
 
 	<div class="container">
-		<form th:action="@{/logincheck}" method="POST">
+		<div class="text-center">
+			<h1 class="h4">StreamCatch</h1>
+			<p>¡Bienvenido de nuevo!</p>
+			<div th:if="${exito}!=null" class="card text-white bg-success mb-3">
+				<div class="card-body">
+					<h5 class="card-title">Exito</h5>
+					<p class="card-text" th:text="${exito}"></p>
+				</div>
+			</div>
+			<div th:if="${error}!=null" class="card text-white bg-danger mb-3">
+				<div class="card-body">
+					<h5 class="card-title">Error</h5>
+					<p class="card-text" th:text="${error}"></p>
+				</div>
+			</div>
+			<p th:text=${exito}></p>
 
+		</div>
+		
+		<form th:action="@{/logincheck}" method="POST">
 			<div th:if="${error}!=null" class="card text-white bg-danger mb-3">
 				<div class="card-body">
 					<h5 class="card-title">Error</h5>
@@ -25,8 +44,8 @@
 				</div>
 			</div>
 
-			<input type="text" name="email" placeholder="Email" /> 
-			<input type="password" name="password" placeholder="Contraseña" />
+			<input type="text" name="email" placeholder="Email" /> <input
+				type="password" name="password" placeholder="Contraseña" />
 			<button type="submit">Entrar</button>
 		</form>
 	</div>

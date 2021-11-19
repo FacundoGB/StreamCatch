@@ -2,6 +2,8 @@ package com.StreamCatch.app.Controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.StreamCatch.app.Entity.Platform;
 import com.StreamCatch.app.Entity.Users;
+import com.StreamCatch.app.Exceptions.ErrorException;
 import com.StreamCatch.app.Interfaces.ErrorHandler;
+import com.StreamCatch.app.Repository.PlatformRepository;
 import com.StreamCatch.app.Service.PlatformService;
 
 @Controller
@@ -25,10 +29,13 @@ public class PlatformController implements ErrorHandler{
 	
 	@Autowired
 	private PlatformService platService;
-	private final String viewPath = "platform/";
+	@Autowired
+	private PlatformRepository platRepo;
+
 	
 	
 	// LISTAR PLATAFORMAS //
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN' )")
 	@GetMapping("/list")
 	public String index(ModelMap userModel) {
 
@@ -39,29 +46,45 @@ public class PlatformController implements ErrorHandler{
 
 	}
 	
+	@GetMapping("/findOne")
+	public Platform findOne(String id) {
+		return platRepo.getById(id);
+	}
+	
+	
 	// VER UNA PLATAFORMA //
-	@GetMapping("/view/{id}")
-	public String viewPlatform(ModelMap userModel, @PathVariable("id") String id) {
-		
-		try {
-			userModel.addAttribute("platform", platService.findById(id));
-		} catch (Exception e) {
-			userModel.put("error", e.getMessage());
-		}
-		
+//	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN' )")
+	@GetMapping("/viewPlatform")
+	public String viewPlatform(ModelMap userModel, @RequestParam String id_platform, HttpSession session)  throws ErrorException {
 
+		System.out.println(id_platform);
+
+		Platform platform = platService.findPlatformById(id_platform);
+		Users loggedUser = (Users) session.getAttribute("usersession");
+		
+		System.out.println(loggedUser);
+		// platService.findPlatformById(id);
+		userModel.addAttribute("platform", platform);
+
+		Boolean value = platService.evaluateSubscription(loggedUser.getId(), id_platform);
+
+		platService.suscribe(loggedUser.getId(), id_platform);
+		userModel.addAttribute("suscrito", value);
+		System.out.println(id_platform);
+
+		System.out.println("No entraste kpo");
 		return "platform/platformView.html";
 
 	}
 	
 	// CREAR PLATAFORMAS //
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/create")
 	public String createPlatform(){
 		
 		return "pruebaFacu/createPlatform";		
 	}
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/create")
 	public String runCreate(ModelMap model, @RequestParam("file") MultipartFile file, @RequestParam("name") String name, 
 			@RequestParam("price") String price) {
@@ -78,12 +101,33 @@ public class PlatformController implements ErrorHandler{
 
 	}
 	
+	
+	// SUSCRIBIR Y DESUSCRIBIR // 
+@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN' )")
+@GetMapping("/suscribe/{id_platform}")
+public String addPlatformToUser(@RequestParam("id_user") String id_user,  @RequestParam("id_platform") String id_platform) throws ErrorException{
+	
+	platService.suscribe(id_user, id_platform);
+	return "redirect:/"; //que me retorne al index
+}
+
+@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN' )")
+@PostMapping("/unsuscribe/{id_platform}")
+public String removePlatformToUser(@RequestParam("id_user") String id_user,  @RequestParam("id_platform") String id_platform) throws ErrorException{
+	platService.unsuscribe(id_user, id_platform);
+	return "redirect:/";
+}
+
+
+	
+	// -------------- // 
+	
 	// UPDATEAR PLATAFORMAS //
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/update/{id}")
 	public String update(ModelMap model, @PathVariable("id") String id) {
 		try {
-			model.addAttribute("platform", platService.findById(id));
+			model.addAttribute("platform", platService.findPlatformById(id));
 			
 		} catch (Exception e) {
 			return this.errorHandler(e, model);
@@ -109,6 +153,8 @@ public class PlatformController implements ErrorHandler{
 		return "redirect:/platform/list";
 	}
 	
+	// ------------- //
+	
 	// ELIMINAR PLATAFORMAS //
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/remove/{id}")
@@ -123,6 +169,25 @@ public class PlatformController implements ErrorHandler{
 		}
 	}
 	
+	// -------------- //
+	
+	// SUSCRIBIR Y DESUSCRIBIR // 
+//	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN' )")
+//	@PostMapping("")
+//	public String addPlatformToUser(@RequestParam("id_user") String id_user, @RequestParam("id_platfrom") String id_platform) throws ErrorException{
+//		
+//		platService.suscribe(id_user, id_platform);
+//		return "redirect://"; //que me retorne al index
+//	}
+//	
+//	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN' )")
+//	@PostMapping("")
+//	public String removePlatformToUser(@RequestParam("id_user") String id_user, @RequestParam("id_platfrom") String id_platform) throws ErrorException{
+//		platService.unsuscribe(id_user, id_platform);
+//		return "redirect://";
+//	}
+	
+	// -------------- //
 	
 	
 	@Override

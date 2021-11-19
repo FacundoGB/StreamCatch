@@ -102,7 +102,7 @@ public class ContentService{
 	public Content findById(String id) throws ErrorException{
 		Optional<Content> answer = repo.findById(id);
 		
-		if(!answer.isEmpty()) {
+		if(answer.isPresent()) {
 			return answer.get();
 			
 		}else {
@@ -114,7 +114,7 @@ public class ContentService{
 	public Content getByKeyword(String keyword) throws ErrorException {
 		Optional<Content> answer = repo.findByKeyword(keyword);
 		
-		if(!answer.isEmpty()) {
+		if(answer.isPresent()) {
 			return answer.get();
 		}else {
 			throw new ErrorException("No existe dicho contenido");

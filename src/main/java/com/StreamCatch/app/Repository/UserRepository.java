@@ -23,6 +23,8 @@ public interface UserRepository extends JpaRepository<Users, String> {
 	@Query("SELECT u from Users u WHERE u.id = :id")
 	public Optional<Users> findById(@Param("id") String id);
 	
+	
+	
 	//public List<Users> findByPlatformId(String id);
 	
 	//@Query("SELECT p.name, p.image FROM Users u JOIN u.platform p")

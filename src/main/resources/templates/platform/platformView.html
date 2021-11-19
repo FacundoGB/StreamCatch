@@ -1,36 +1,51 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- Head -->
 
 <head th:replace="/fragments/head :: head"></head>
 
 <body>
+	<header th:replace="fragments/header :: header"></header>
+	<main>
+		<div class="container py-3">
 
-  <main>
+			<!-- BOTON SUSCRIBIRSE -->
+			<div th:if="${suscrito == false}">
+				<form
+					th:action="@{/platform/suscribe/{id_platform}(id_platform=${Platform.id})}"
+					method="post" class="d-none" id="listaForm">
+					<input type="text" th:value="${session.usersession.id}"
+						name="id_user">
+				</form>
+				<button type="submit" form="listaForm" class="btn btn-success mb-5">Agregar
+					a mi lista</button>
+			</div>
 
-    <table class="row g-3" th:action="@{/platform/view/__${platform.id}__}">
+			<!-- BOTON DESUSCRIBIRSE -->
+			<div th:if="${suscrito == true}">
+				<form
+					th:action="@{/platform/unsuscribe/{id_platform}(id_platform=${Platform.id})}"
+					method="post" class="d-none" id="quitaForm">
+					<input type="text" th:value="${session.usersession.id}"
+						name="id_user">
+				</form>
 
-    	<tbody>
-    		
-    		<tr>
-    			<td style="width: 50px; height: 50px"><img alt="" th:src="*{'data:image/jpeg;base64,'+{Platform.image}}" style="width: 100px; height: 100px"></td>
-    		</tr>
-    		
-    	</tbody>
- 		
-    </table>
+				<button type="submit" form="quitaForm" class="btn btn-danger mb-5">Sacar
+					de mi lista</button>
+			</div>
+			<div class="ratio ratio-21x9">
+				<img alt="" th:src="*{'data:image/jpeg;base64,'+{platform.image}}"
+					style="width: 100px; height: 100px">
+			</div>
+		</div>
 
 
 
 
+	</main>
 
-
-
-
-
-  </main>
-
-  <footer th:replace="/fragments/footer :: footer"></footer>
+	<footer th:replace="/fragments/footer :: footer"></footer>
 
 </body>
 

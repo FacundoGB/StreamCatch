@@ -1,65 +1,59 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="/fragments/head :: head"></head>
 
 <body>
-    <header>
 
-        <table id="table1">
 
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
+	<table id="table1">
 
-            <tbody th:each="Users : ${users}">
-                <tr>
-                    <td th:text="${Users.name}"></td>
-                    <td th:text="${Users.surname}"></td>
-                    <td th:text="${Users.email}"></td>
-                    <td><a class="btn btn-primary" th:href="@{/usuario/update/{id}(id=${Users.id})}">Actualizar</a></td>
-                </tr>
-            </tbody>
-        </table>
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Email</th>
+			</tr>
+		</thead>
 
-        <div class="album py-5 bg-light">
-            <div class="container">
+		<tbody>
+			<tr>
+				<td th:text="${user.name}"></td>
+				<td th:text="${user.surname}"></td>
+				<td th:text="${user.email}"></td>
+				<td><a class="btn btn-primary"
+					th:href="@{/usuario/update/{id}(id=${user.id})}">Actualizar</a></td>
+			</tr>
+		</tbody>
+	</table>
 
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+ <table class="form2">
+			<thead>
+				<th>Seleccione las paltaformas contratadas</th>
+			</thead>
+			<tbody th:each="Platform : ${platforms}">
+				<tr>
+				
 
-                    <div class="col" th:each="Users : ${myUserPlat}">
-                        <div class="card shadow-sm">
-                            <a th:href="@{/platform/view/{id}(id=${Platform.id})}" target="_blank">
-                                <img class="bd-placeholder-img card-img-top img-thumbnail"
-                                    th:src="*{'data:image/jpeg;base64,'+{Platform.image}}" th:alt="${Platform.name}">
-                            </a>
+					<td style="width: 50px; height: 50px">
+						<img alt="" th:src="*{'data:image/jpeg;base64,'+{Platform.image}}"
+							style="width: 100px; height: 100px">
+						<input type="checkbox" name="idPlatform" th:value="${Platform.id}">
+						<p th:text="${Platform.name}"></p>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
-                            <div class="card-body">
-                                <p class="card-text" th:text="${Platform.name}"></p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group" sec:authorize="hasAnyRole('ROLE_ADMIN')">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+              <button class="btn btn-primary" type="submit">SAVE</button>
             </div>
 
-    </header>
+	</form>
 
-    <main>
 
-    </main>
 
-    <footer class="pie-pagina" th:replace="/fragments/footer :: footer"></footer>
+		<footer class="pie-pagina" th:replace="/fragments/footer :: footer"></footer>
 </body>
 
 </html>
