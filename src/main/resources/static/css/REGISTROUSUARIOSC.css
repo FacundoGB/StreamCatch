@@ -87,12 +87,12 @@ h4 {
     color: #fff;
 }
 
-.platform {
+.platforms {
     padding: 5px;
     margin: 10px;
     border: 2px;
     float: 0px;
-   display: inline-block;
+    display: inline-block;
     
 }
 
