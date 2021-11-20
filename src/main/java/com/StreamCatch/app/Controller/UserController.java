@@ -129,7 +129,7 @@ public class UserController {
 		return "modUser.html";
 	}
 	
-	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN' )")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@PostMapping("/update/{id}")
 	public String updateUser(HttpSession session, ModelMap model, @PathVariable("id") String id, @RequestParam("name") String name, 
 								@RequestParam("surname") String surname, @RequestParam("email") String email, 
