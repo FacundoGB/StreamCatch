@@ -80,18 +80,19 @@ h4 {
     align-items: center;
 }
 
-.form2 p {
+.form2 h6 {
     height: 20px;
     text-align: center;
     font-size: 10px;
     color: #fff;
 }
 
-.form2 checkbox {
+.platform {
     padding: 5px;
     margin: 10px;
     border: 2px;
     float: 0px;
+   display: inline-block;
     
 }
 
