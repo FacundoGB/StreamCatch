@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- Head -->
 <head th:replace="/fragments/head :: head"></head>
-
+<header th:replace="/fragments/header :: header"></header>
 <body>
 
 <main>
@@ -25,12 +25,15 @@
         </div>
     </section>
 
-    <section class="section3">
+	<section class="section3">
         <div class="buscar">
-            <input type="text" name="keyword" th:value="${keyword}" placeholder="Buscar" required>
-            <button type="button" class="btn btn-warning"><i class="fas fa-search"></i></button>
+        	<form class="form-inline my-2 my-lg-0" th:action="@{/content/busqueda}">
+            	<input type="search" name="query" th:value="${query}" placeholder="Buscar" required>
+            	<button type="submit" class="btn btn-warning"><i class="fas fa-search"></i></button>
+			</form>       
         </div>
-    </section>
+    </section>       
+
     <section class="section4">
 		<div class="titulo-servicios">
 			<h2>SERVICIOS DISPONIBLES</h2>
