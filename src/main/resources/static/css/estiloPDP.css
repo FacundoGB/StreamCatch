@@ -1,11 +1,11 @@
 *{
-    padding: 0;
-    margin: 0;
+   padding: 0;
+     margin: 0;
 }
 body{
+   
     
-    background: #292929;
-    font-family: 'calibri';
+    background: #292929; 
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -18,17 +18,17 @@ header{
     content: '';
     display: flex;
 }
-.menu{
-    width: 900px;
+/*.menu{
+    width: 100%;
     margin: 0 auto;
-}
+}*/
 img{
     width: 120px;
     float: left;
     padding: 8px;
 
 }
-nav{
+/*nav{
     float: right;
 }
 nav ul li{
@@ -136,7 +136,7 @@ color: white;
 
   /*FOOTER*/
  .section5{
-    background-color: #efbb1e;
+    
      padding: 1em 0;
      margin-top: auto;
      height: 50px;
