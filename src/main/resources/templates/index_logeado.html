@@ -2,19 +2,12 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- Head -->
 <head th:replace="/fragments/head :: head"></head>
-<<<<<<< HEAD
-<!-- Header -->
 <header th:replace="/fragments/header :: header"></header>
-
-=======
-<header th:replace="/fragments/header :: header"></header>
->>>>>>> a2e504b8e7604d0fed50ce7d5a042fa60780a6c5
 
 <body>
 
 <main>
     <section class="section1">
-    <!-- 
         <header>
             <div class="menu">
                 <nav>
@@ -24,37 +17,22 @@
                     </ul>
                 </nav>
             </div>
-        </header> 
-        -->
-        
-        <header>
-        	<nav>
-        	<a href="index.html"><img src="images/dvp.png" class="logo"></a>
-        		<ul>
-	       			<li><a href="/usuario/registro">registrarse</a></li>
-        			<li><a href="/login">iniciar sesion</a></li>
-        		</ul>
-        	</nav>
         </header>
-        
-        
-        
-        
     </section>
 
-    <section class="section2" id = "bcolor">
+    <section class="section2">
         <div class="logo">
             <img src="img/Logo_StreamCatch.png" alt="">
         </div>
     </section>
 
-    <section class="section3" id = "bcolor">
+    <section class="section3">
         <div class="buscar">
             <input type="text" name="keyword" th:value="${keyword}" placeholder="Buscar" required>
             <button type="button" class="btn btn-warning"><i class="fas fa-search"></i></button>
         </div>
     </section>
-    <section class="section4" id= "bcolor">
+    <section class="section4">
 		<div class="titulo-servicios">
 			<h2>SERVICIOS DISPONIBLES</h2>
 		</div>
