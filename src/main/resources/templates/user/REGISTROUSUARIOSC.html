@@ -2,23 +2,29 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!--  <script src="script src=" https://kit.fontawesome.com/6b7595bff0.js" crossorigin="anonymous"></script>  -->
 
-<head>
-
-	<head th:replace="/fragments/head :: head"></head>
-	<link rel="stylesheet" href="/css/REGISTROUSUARIOSC.css">
+<head> 
+  <head th:replace="/fragments/head :: head"></head>   
 </head>
+<header>
+  	<link rel="stylesheet" href="/css/REGISTROUSUARIOSC.css">
+</header>
 
 <body>
+<div class="container-fluid">
 	<section class="section1">
-		<header>
-			<div class="menu">
-				<nav>
-					<ul>
-						<li><a href="#">Inicio</a> </li>
-					</ul>
-				</nav>
-			</div>
-		</header>
+		<header> 
+         <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" id="boton_inicio" th:href="@{/}">INICIO</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+  </header>
 	</section>
 
 	<div th:if="${error}!=null" class="card text-white bg-danger mb-3">
@@ -27,41 +33,49 @@
 			<p class="card-text" th:text="${error}"></p>
 		</div>
 	</div>
-
-	<form class="form1" action="/usuario/registro" method="POST">
-
+<center>
+	<form class="form-register" action="/usuario/registro" method="POST">
+      <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
 		<h4>Crear cuenta</h4>
 		<p th:if="${error != null}" th:text="${error}" style=color:red;></p>
 		<input class="controls" type="text" name="name" id="nombres" placeholder="Ingrese su nombre"><br>
 		<input class="controls" type="text" name="surname" id="apellidos" placeholder="Ingrese su apellido"><br>
 		<input class="controls" type="text" name="email" id="correo" placeholder="Ingrese su correo"><br>
-		<input class="controls" type="text" name="password" id="clave" placeholder="Ingrese su clave"><br>
-
-		  <table class="form2">
-			<thead>
-				<th>Seleccione las paltaformas contratadas</th>
+		<input class="controls" type="password" name="password" id="clave" placeholder="Ingrese su clave"><br>
+<thead>
+				<h6>Seleccione las plataformas contratadas</h6>
 			</thead>
+		  <div class="form2">
+		  <div class="row">
+		  <div class="col-md-12">
+			
 			<tbody th:each="Platform : ${platforms}">
 				<tr>
 				
 
-					<td style="width: 50px; height: 50px">
+					<div class=platforms>
 						<img alt="" th:src="*{'data:image/jpeg;base64,'+{Platform.image}}"
 							style="width: 100px; height: 100px">
 						<input type="checkbox" name="idPlatform" th:value="${Platform.id}">
 						<p th:text="${Platform.name}"></p>
-					</td>
+					</div>
 				</tr>
 			</tbody>
-		</table>
+		  </div>
+		  </div>
+		</div>
 
-              <button class="btn btn-primary" type="submit">SAVE</button>
+              <button class="btn btn-primary" type="submit" >REGISTRARSE</button>
             </div>
-
+      </div>
+      <div class="col-md-4"></div>
+       </div>
 	</form>
-
+</center>
 	<footer class="pie-pagina" th:replace="/fragments/footer :: footer"></footer>
-
+</div>
 </body>
 
 </html>
