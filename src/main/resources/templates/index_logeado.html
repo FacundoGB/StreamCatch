@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<meta name="viewport" content="width=device-width, use-scalable=no, initial-scale=1.0, minium-scale=1.0">
 <!-- Head -->
 <head th:replace="/fragments/head :: head"></head>
 <header th:replace="/fragments/header :: header"></header>
 
- <header th:replace="/fragments/header :: header"></header>
-
-
-
 <body>
+
 <main>
-     <section class="section1">
+    <section class="section1">
         <header>
             <div class="menu">
-                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #6C6969;">
-                <div class="container-fluid">
-                 <a class="navbar-brand" href="#">STREAMCATCH</a>
-                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a href="/usuario/registro">Registrarse</a></li>
-                        <liclass="nav-item"><a href="/login">Iniciar Sesion</a></li>
+                <nav>
+                    <ul>
+                        <li><a href="/usuario/registro">Registrarse</a></li>
+                        <li><a href="/login">Iniciar Sesion</a></li>
                     </ul>
                 </nav>
             </div>
@@ -83,10 +73,11 @@
 </main>
 
     <section class="section5">
-        <footer th:replace="/fragments/new_footer :: footer"></footer>
+        <footer th:replace="/fragments/footer :: footer"></footer>
     </section>
     
     
+
 </body>
 
 </html>

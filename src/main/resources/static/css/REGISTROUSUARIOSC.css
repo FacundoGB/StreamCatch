@@ -15,28 +15,36 @@ header {
     width: 100%;
     clear: both;
     content: '';
-    display: flex;
-}
-
-nav {
-    float: right;
+    display: inherit;
+    float: right; 
+      
+    
 }
 
 nav ul li {
     list-style: none;
-    margin-left: 1450px;
-    padding: 12px 0;
-    float: left;
+    margin-right: 22px;
+    padding: 5px 0;
+    float: right;
     position: relative;
-    left: 210px;
+    right: 0;
+    
 }
 
 nav ul li a {
     text-decoration: none;
-    color: white;
+    color: #C4C4C4;
     font-weight: bold;
+    float: right; 
+     
 }
 
+nav ul{
+	background: #C4C4C4;
+}
+.container-fluid {
+	margin: 0px;
+}
 .contenedor {
     width: 100%;
     margin: 0 auto;
@@ -53,6 +61,7 @@ nav ul li a {
     color: #fff;
     margin-left: auto;
     margin-right: auto;
+    align-items: center;
 }
 
 h4 {
@@ -68,22 +77,26 @@ h4 {
     border: 1px solid #fff;
     font-size: 22px;
     text-align: center;
+    align-items: center;
 }
 
-.form2 p {
+.form2 h6 {
     height: 20px;
     text-align: center;
     font-size: 10px;
     color: #fff;
 }
 
-.checkbox {
+.platforms {
     padding: 5px;
     margin: 10px;
     border: 2px;
+    float: 0px;
+    display: inline-block;
+    
 }
 
-.button {
+.btn btn-primary {
     width: 15%;
     background: #F5C800;
     border-radius: 22px;
