@@ -42,12 +42,23 @@ nav ul li a{
 }
 
 th {
-    font-size: 35px;
+    font-size: 30px;
     line-height: 20px;
-    padding: 0 20px;
+    padding: 0 30px;
     text-align: justify;
     vertical-align: top;
     margin-bottom:30px;
+    width: 50%;
+    color: white;
+}
+
+.titulo {
+    font-size: 30px;
+    line-height: 30px;
+    padding: 0 30px;
+    text-align: center;
+    vertical-align: top;
+    margin-bottom:30px;    
     width: 50%;
     color: white;
 }
@@ -128,3 +139,12 @@ th {
       
   } 
   
+  .pie-pagina3{
+     background-color: #efbb1e;
+     padding: 1em 0;   
+     height: 70px;
+     margin-top: 200px;
+     text-align: center;
+     
+      
+  }
