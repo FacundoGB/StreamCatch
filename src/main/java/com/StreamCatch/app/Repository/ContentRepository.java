@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.StreamCatch.app.Entity.Content;
 
+
+
 @Repository
 public interface ContentRepository extends JpaRepository<Content, String>{
 		
@@ -21,6 +23,9 @@ public interface ContentRepository extends JpaRepository<Content, String>{
 	
 	@Query(value = "SELECT * FROM StreamCatch.content WHERE StreamCatch.content.name LIKE '%q%'", nativeQuery=true)
 	List<Content> findByName(@Param("q")String q);
+	
+	@Query("SELECT p FROM Content p WHERE CONCAT(p.name, ' ', p.image) LIKE %?1%")
+	public List<Content> search(String keyword);
 
 }
 

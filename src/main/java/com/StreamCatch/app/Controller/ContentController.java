@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +18,16 @@ import org.springframework.web.multipart.MultipartFile;
 import com.StreamCatch.app.Entity.Content;
 import com.StreamCatch.app.Interfaces.ErrorHandler;
 import com.StreamCatch.app.Service.ContentService;
+import com.StreamCatch.app.Repository.ContentRepository;
+
 
 
 @Controller
 @RequestMapping("/content")
 public class ContentController implements ErrorHandler {
 
+	@Autowired
+	private ContentRepository repo;
 	@Autowired
 	private ContentService contentService;
 	/*private final String viewPath = "content/";*/
@@ -41,7 +46,7 @@ public class ContentController implements ErrorHandler {
 	}
 	
 	
-	@GetMapping("/{id}")
+	@GetMapping("/detalles/{id}")
 	public String index(ModelMap contentModel, @PathVariable("id") String id) {
 
 		try {
@@ -50,7 +55,7 @@ public class ContentController implements ErrorHandler {
 			contentModel.put("error", e.getMessage());
 		}
 		
-		return "content";
+		return "detalles";
 
 	}
 	
@@ -165,7 +170,6 @@ public class ContentController implements ErrorHandler {
 
 	
 	
-	
 		
 	@Override
 	public String errorHandler(Exception e, ModelMap model) {
@@ -174,3 +178,4 @@ public class ContentController implements ErrorHandler {
 	}
 
 }
+

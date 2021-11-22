@@ -6,13 +6,14 @@
 <header th:replace="/fragments/headercontent :: header"></header>
 
 <body>
-
-  <table>
+<table>
     <thead>
       <tr>
       	
         <th scope="col">Name</th>       
         <th scope="col">Image</th>
+        <th scope="col">Solo disponible en </th>
+       
          
       </tr>
     </thead>
@@ -22,19 +23,13 @@
 
 
         <td class="text" th:text="${Content.name}"></td>        
-        <td ><img alt="La imagen no carga" class="image" th:src="*{'data:image/jpeg;base64,'+{Content.image}}"></td>
-        <td><a class="btn btn-danger" th:href="@{/content/remove/{id}(id=${Content.id})}">Eliminar</a></td>
-        <td><a class="btn btn-primary" th:href="@{/content/update/{id}(id=${Content.id})}">Actualizar</a></td>
-        <td><a class="btn btn-primary" th:href="@{/content/detalles/} + ${Content.id}">Ver</a>
+        <td ><img alt="La imagen no carga" class="image" th:src="*{'data:image/jpeg;base64,'+{Content.image}}"></td>                              
+      <td><img alt="La imagen no carga" class="image" th:src="@{/img/Icon_NETFLIX.png}"></td> 
       </tr>
       <!-- class="btn btn-warning text-white" -->
       <!-- class="btn btn-warning text-white" -->
     </tbody>
   </table>
-
-  <a class="btn btn-success" th:href="@{/content/create}">Create new Content</a>
-  <footer th:replace="/fragments/footercontent :: footer"></footer>
-
+ <!-- <footer th:replace="/fragments/footercontent :: footer"></footer>-->
 </body>
-
 </html>
