@@ -41,7 +41,8 @@ public class ContentController implements ErrorHandler {
 	}
 	
 	
-	@GetMapping("/{id}")
+		
+	@GetMapping("/detalles/{id}")
 	public String index(ModelMap contentModel, @PathVariable("id") String id) {
 
 		try {
@@ -50,9 +51,10 @@ public class ContentController implements ErrorHandler {
 			contentModel.put("error", e.getMessage());
 		}
 		
-		return "content";
+		return "detalles";
 
 	}
+		
 	
 	
 	/*/@GetMapping()

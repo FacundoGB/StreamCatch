@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<header th:replace="/fragments/headercontent :: header"></header>
+
+<body>
+<table>
+    <thead>
+      <tr>
+      	
+        <th scope="col">Name</th>       
+        <th scope="col">Image</th>
+        <th scope="col">Solo disponible en </th>
+       
+         
+      </tr>
+    </thead>
+
+    <tbody th:each="Content : ${content}">    
+    	<tr>
+
+        	<td class="text" th:text="${Content.name}"></td>        
+        	<td ><img alt="La imagen no carga" class="image" th:src="*{'data:image/jpeg;base64,'+{Content.image}}"></td>                              
+      	<td><img alt="La imagen no carga" class="image" th:src="@{/img/netflix.png}"></td> 
+      	</tr>
+      <!-- class="btn btn-warning text-white" -->
+      <!-- class="btn btn-warning text-white" -->
+    </tbody>
+  </table>
+  <footer th:replace="/fragments/footer :: footer"></footer>
+  </body>
+</html>

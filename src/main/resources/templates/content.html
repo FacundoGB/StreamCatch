@@ -25,7 +25,7 @@
         <td ><img alt="La imagen no carga" class="image" th:src="*{'data:image/jpeg;base64,'+{Content.image}}"></td>
         <td><a class="btn btn-danger" th:href="@{/content/remove/{id}(id=${Content.id})}">Eliminar</a></td>
         <td><a class="btn btn-primary" th:href="@{/content/update/{id}(id=${Content.id})}">Actualizar</a></td>
-
+		<td><a class="btn btn-primary" th:href="@{/content/detalles/} + ${Content.id}">Ver</a></td>
       </tr>
       <!-- class="btn btn-warning text-white" -->
       <!-- class="btn btn-warning text-white" -->
